@@ -1,0 +1,1526 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_d594346955cd40b181688f9875f6db0a {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+        <div style="position: fixed; bottom: 50px; right: 50px; width: 200px;
+                    z-index:9999; background-color: white; padding: 10px; border: 2px solid gray;">
+            <h4 style="margin-top: 0;">Legend</h4>
+            <div style="margin: 5px 0;">
+                <span style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; 
+                           background-color: red; margin-right: 5px;"></span>
+                Recommended Spots
+            </div>
+            <div style="margin: 5px 0;">
+                <span style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; 
+                           background-color: blue; margin-right: 5px;"></span>
+                Existing Dorms
+            </div>
+            <div style="margin: 5px 0;">
+                <span style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; 
+                           background-color: gray; margin-right: 5px;"></span>
+                Existing Parking
+            </div>
+        </div>
+    
+    
+            <div class="folium-map" id="map_d594346955cd40b181688f9875f6db0a" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_d594346955cd40b181688f9875f6db0a = L.map(
+                "map_d594346955cd40b181688f9875f6db0a",
+                {
+                    center: [29.889, -97.942],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 15,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_8d34665c1f6f134a869155cdd7b49f0f = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_8d34665c1f6f134a869155cdd7b49f0f.addTo(map_d594346955cd40b181688f9875f6db0a);
+        
+    
+            var circle_marker_1e24e492a185ffaa983bfe9426ebe22f = L.circleMarker(
+                [29.8907069, -97.9421424],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_d594346955cd40b181688f9875f6db0a);
+        
+    
+        var popup_c14f59110150a8744dd2ee5642c21e64 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_11befa5f64940ddcbf1b53fe9b2858fa = $(`<div id="html_11befa5f64940ddcbf1b53fe9b2858fa" style="width: 100.0%; height: 100.0%;">Alamito<br>Desirability: 0.270</div>`)[0];
+                popup_c14f59110150a8744dd2ee5642c21e64.setContent(html_11befa5f64940ddcbf1b53fe9b2858fa);
+            
+        
+
+        circle_marker_1e24e492a185ffaa983bfe9426ebe22f.bindPopup(popup_c14f59110150a8744dd2ee5642c21e64)
+        ;
+
+        
+    
+    
+            circle_marker_1e24e492a185ffaa983bfe9426ebe22f.bindTooltip(
+                `<div>
+                     Alamito
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_12bd8dfaccdc6c68c2ca0512141d93c7 = L.circleMarker(
+                [29.888411, -97.938351],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_d594346955cd40b181688f9875f6db0a);
+        
+    
+        var popup_029017f09945c2dab6cab9acc94cf63d = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_c66c338c524c8d595d199771b6b008f4 = $(`<div id="html_c66c338c524c8d595d199771b6b008f4" style="width: 100.0%; height: 100.0%;">Balcones<br>Desirability: 0.137</div>`)[0];
+                popup_029017f09945c2dab6cab9acc94cf63d.setContent(html_c66c338c524c8d595d199771b6b008f4);
+            
+        
+
+        circle_marker_12bd8dfaccdc6c68c2ca0512141d93c7.bindPopup(popup_029017f09945c2dab6cab9acc94cf63d)
+        ;
+
+        
+    
+    
+            circle_marker_12bd8dfaccdc6c68c2ca0512141d93c7.bindTooltip(
+                `<div>
+                     Balcones
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_be3316af0a5d73b11460ba6cef995c18 = L.circleMarker(
+                [29.8863769, -97.9480979],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_d594346955cd40b181688f9875f6db0a);
+        
+    
+        var popup_4ae6a2a018d1a59fdf75b8a476c51f4d = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_e85414b5caa7a8621d05b1c550d226c9 = $(`<div id="html_e85414b5caa7a8621d05b1c550d226c9" style="width: 100.0%; height: 100.0%;">Bexar<br>Desirability: 0.592</div>`)[0];
+                popup_4ae6a2a018d1a59fdf75b8a476c51f4d.setContent(html_e85414b5caa7a8621d05b1c550d226c9);
+            
+        
+
+        circle_marker_be3316af0a5d73b11460ba6cef995c18.bindPopup(popup_4ae6a2a018d1a59fdf75b8a476c51f4d)
+        ;
+
+        
+    
+    
+            circle_marker_be3316af0a5d73b11460ba6cef995c18.bindTooltip(
+                `<div>
+                     Bexar
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_a57c0fbf59e8057f6d44e204fd652cf8 = L.circleMarker(
+                [29.8871351, -97.9519144],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_d594346955cd40b181688f9875f6db0a);
+        
+    
+        var popup_4eb74b043d7296a0147d8d82b5f138fd = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_3be22bf2a9a0cd8613d9017babf545c0 = $(`<div id="html_3be22bf2a9a0cd8613d9017babf545c0" style="width: 100.0%; height: 100.0%;">Blanco<br>Desirability: 0.613</div>`)[0];
+                popup_4eb74b043d7296a0147d8d82b5f138fd.setContent(html_3be22bf2a9a0cd8613d9017babf545c0);
+            
+        
+
+        circle_marker_a57c0fbf59e8057f6d44e204fd652cf8.bindPopup(popup_4eb74b043d7296a0147d8d82b5f138fd)
+        ;
+
+        
+    
+    
+            circle_marker_a57c0fbf59e8057f6d44e204fd652cf8.bindTooltip(
+                `<div>
+                     Blanco
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_3a9a38265de466e10d770da85a852e9e = L.circleMarker(
+                [29.8931366, -97.9222567],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_d594346955cd40b181688f9875f6db0a);
+        
+    
+        var popup_21de1f6d6993789fd5b3b4aae60dfc10 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_b5c9080b757b9bf67b7dba9576eae058 = $(`<div id="html_b5c9080b757b9bf67b7dba9576eae058" style="width: 100.0%; height: 100.0%;">Bobcat Village Apartments<br>Desirability: 0.064</div>`)[0];
+                popup_21de1f6d6993789fd5b3b4aae60dfc10.setContent(html_b5c9080b757b9bf67b7dba9576eae058);
+            
+        
+
+        circle_marker_3a9a38265de466e10d770da85a852e9e.bindPopup(popup_21de1f6d6993789fd5b3b4aae60dfc10)
+        ;
+
+        
+    
+    
+            circle_marker_3a9a38265de466e10d770da85a852e9e.bindTooltip(
+                `<div>
+                     Bobcat Village Apartments
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_7466e05d81bcd3d942d65b2253baa3cf = L.circleMarker(
+                [29.8882987, -97.9399],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_d594346955cd40b181688f9875f6db0a);
+        
+    
+        var popup_a4a65cb1c949c98916126ba2df677b0b = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_fb41fe3f0faa29de4a3fa3bf7257919e = $(`<div id="html_fb41fe3f0faa29de4a3fa3bf7257919e" style="width: 100.0%; height: 100.0%;">Brogdon<br>Desirability: 0.406</div>`)[0];
+                popup_a4a65cb1c949c98916126ba2df677b0b.setContent(html_fb41fe3f0faa29de4a3fa3bf7257919e);
+            
+        
+
+        circle_marker_7466e05d81bcd3d942d65b2253baa3cf.bindPopup(popup_a4a65cb1c949c98916126ba2df677b0b)
+        ;
+
+        
+    
+    
+            circle_marker_7466e05d81bcd3d942d65b2253baa3cf.bindTooltip(
+                `<div>
+                     Brogdon
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_c9f430ea8bed72fb36068790b77e22f1 = L.circleMarker(
+                [29.8870394, -97.9389694],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_d594346955cd40b181688f9875f6db0a);
+        
+    
+        var popup_ff3b43e6231ae867d5c20ff42a74b57a = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_7e14174bcf32490ee02999995ccbd50a = $(`<div id="html_7e14174bcf32490ee02999995ccbd50a" style="width: 100.0%; height: 100.0%;">Butler<br>Desirability: 0.472</div>`)[0];
+                popup_ff3b43e6231ae867d5c20ff42a74b57a.setContent(html_7e14174bcf32490ee02999995ccbd50a);
+            
+        
+
+        circle_marker_c9f430ea8bed72fb36068790b77e22f1.bindPopup(popup_ff3b43e6231ae867d5c20ff42a74b57a)
+        ;
+
+        
+    
+    
+            circle_marker_c9f430ea8bed72fb36068790b77e22f1.bindTooltip(
+                `<div>
+                     Butler
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_c77c51b7d44774e8c278b53c2ec215b0 = L.circleMarker(
+                [29.8904711, -97.946585],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_d594346955cd40b181688f9875f6db0a);
+        
+    
+        var popup_48103b31b97d4c30078ad778cd44069d = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_ad5d5f6ea03b8dfcefec67ac544fa68c = $(`<div id="html_ad5d5f6ea03b8dfcefec67ac544fa68c" style="width: 100.0%; height: 100.0%;">Chautauqua<br>Desirability: 0.429</div>`)[0];
+                popup_48103b31b97d4c30078ad778cd44069d.setContent(html_ad5d5f6ea03b8dfcefec67ac544fa68c);
+            
+        
+
+        circle_marker_c77c51b7d44774e8c278b53c2ec215b0.bindPopup(popup_48103b31b97d4c30078ad778cd44069d)
+        ;
+
+        
+    
+    
+            circle_marker_c77c51b7d44774e8c278b53c2ec215b0.bindTooltip(
+                `<div>
+                     Chautauqua
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_b5049f3b1888ff9d5f02b6836a5b3c14 = L.circleMarker(
+                [29.88933089999999, -97.9463904],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_d594346955cd40b181688f9875f6db0a);
+        
+    
+        var popup_d5f3f5dbd459138fba4e33bc0b2139e9 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_bbcb909320e1a995be2183a24031d8ef = $(`<div id="html_bbcb909320e1a995be2183a24031d8ef" style="width: 100.0%; height: 100.0%;">College Inn<br>Desirability: 0.456</div>`)[0];
+                popup_d5f3f5dbd459138fba4e33bc0b2139e9.setContent(html_bbcb909320e1a995be2183a24031d8ef);
+            
+        
+
+        circle_marker_b5049f3b1888ff9d5f02b6836a5b3c14.bindPopup(popup_d5f3f5dbd459138fba4e33bc0b2139e9)
+        ;
+
+        
+    
+    
+            circle_marker_b5049f3b1888ff9d5f02b6836a5b3c14.bindTooltip(
+                `<div>
+                     College Inn
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_297ecbeed1748813ff8a497f9aa7d135 = L.circleMarker(
+                [29.888411, -97.938351],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_d594346955cd40b181688f9875f6db0a);
+        
+    
+        var popup_d9a8ff45fe7f8177e6dcbc88fe1f9e7f = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_289d61f4208fed56403f80c3486ef3ba = $(`<div id="html_289d61f4208fed56403f80c3486ef3ba" style="width: 100.0%; height: 100.0%;">Cypress<br>Desirability: 0.137</div>`)[0];
+                popup_d9a8ff45fe7f8177e6dcbc88fe1f9e7f.setContent(html_289d61f4208fed56403f80c3486ef3ba);
+            
+        
+
+        circle_marker_297ecbeed1748813ff8a497f9aa7d135.bindPopup(popup_d9a8ff45fe7f8177e6dcbc88fe1f9e7f)
+        ;
+
+        
+    
+    
+            circle_marker_297ecbeed1748813ff8a497f9aa7d135.bindTooltip(
+                `<div>
+                     Cypress
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_24dbecfd7efae9641e4baff9999ad8a4 = L.circleMarker(
+                [29.8863734, -97.9509257],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_d594346955cd40b181688f9875f6db0a);
+        
+    
+        var popup_87754e05b04476adaf5dae97599fdea0 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_3026650d85be68fe8424ae908e1f159b = $(`<div id="html_3026650d85be68fe8424ae908e1f159b" style="width: 100.0%; height: 100.0%;">Falls<br>Desirability: 0.486</div>`)[0];
+                popup_87754e05b04476adaf5dae97599fdea0.setContent(html_3026650d85be68fe8424ae908e1f159b);
+            
+        
+
+        circle_marker_24dbecfd7efae9641e4baff9999ad8a4.bindPopup(popup_87754e05b04476adaf5dae97599fdea0)
+        ;
+
+        
+    
+    
+            circle_marker_24dbecfd7efae9641e4baff9999ad8a4.bindTooltip(
+                `<div>
+                     Falls
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_8ec2756838ffacbd8c9d41ad5fb0aff4 = L.circleMarker(
+                [29.8899181, -97.9445478],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_d594346955cd40b181688f9875f6db0a);
+        
+    
+        var popup_fd27c5b03f787f95a0e1be33d5fb899c = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_e54d055c327df3c24edbf42ffdb324a8 = $(`<div id="html_e54d055c327df3c24edbf42ffdb324a8" style="width: 100.0%; height: 100.0%;">Jackson<br>Desirability: 0.424</div>`)[0];
+                popup_fd27c5b03f787f95a0e1be33d5fb899c.setContent(html_e54d055c327df3c24edbf42ffdb324a8);
+            
+        
+
+        circle_marker_8ec2756838ffacbd8c9d41ad5fb0aff4.bindPopup(popup_fd27c5b03f787f95a0e1be33d5fb899c)
+        ;
+
+        
+    
+    
+            circle_marker_8ec2756838ffacbd8c9d41ad5fb0aff4.bindTooltip(
+                `<div>
+                     Jackson
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_f4a088153f8792288c27504644e53401 = L.circleMarker(
+                [29.8870106, -97.9397323],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_d594346955cd40b181688f9875f6db0a);
+        
+    
+        var popup_83a96e872c988aac3bca257408eae9a9 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_82ef86afc50ee225dc963138098aea77 = $(`<div id="html_82ef86afc50ee225dc963138098aea77" style="width: 100.0%; height: 100.0%;">Lantana<br>Desirability: 0.499</div>`)[0];
+                popup_83a96e872c988aac3bca257408eae9a9.setContent(html_82ef86afc50ee225dc963138098aea77);
+            
+        
+
+        circle_marker_f4a088153f8792288c27504644e53401.bindPopup(popup_83a96e872c988aac3bca257408eae9a9)
+        ;
+
+        
+    
+    
+            circle_marker_f4a088153f8792288c27504644e53401.bindTooltip(
+                `<div>
+                     Lantana
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_71d018dc74557b6157cda245dd0fbae4 = L.circleMarker(
+                [29.8876145, -97.9406014],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_d594346955cd40b181688f9875f6db0a);
+        
+    
+        var popup_b590117c083edf1028b1570b17f8c78e = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_17a12bc7a7ca3f303c4ccba1d65aab64 = $(`<div id="html_17a12bc7a7ca3f303c4ccba1d65aab64" style="width: 100.0%; height: 100.0%;">Laurel<br>Desirability: 0.447</div>`)[0];
+                popup_b590117c083edf1028b1570b17f8c78e.setContent(html_17a12bc7a7ca3f303c4ccba1d65aab64);
+            
+        
+
+        circle_marker_71d018dc74557b6157cda245dd0fbae4.bindPopup(popup_b590117c083edf1028b1570b17f8c78e)
+        ;
+
+        
+    
+    
+            circle_marker_71d018dc74557b6157cda245dd0fbae4.bindTooltip(
+                `<div>
+                     Laurel
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_af301c4db2005ef2b39be8038dc9ba53 = L.circleMarker(
+                [29.8881956, -97.940644],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_d594346955cd40b181688f9875f6db0a);
+        
+    
+        var popup_395d72e65c67542c6a2448ec41503ff1 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_c22b44dffba27153323c2991c98a7575 = $(`<div id="html_c22b44dffba27153323c2991c98a7575" style="width: 100.0%; height: 100.0%;">Mesquite<br>Desirability: 0.393</div>`)[0];
+                popup_395d72e65c67542c6a2448ec41503ff1.setContent(html_c22b44dffba27153323c2991c98a7575);
+            
+        
+
+        circle_marker_af301c4db2005ef2b39be8038dc9ba53.bindPopup(popup_395d72e65c67542c6a2448ec41503ff1)
+        ;
+
+        
+    
+    
+            circle_marker_af301c4db2005ef2b39be8038dc9ba53.bindTooltip(
+                `<div>
+                     Mesquite
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_417306e034db997db3f9fb35c2f6f33d = L.circleMarker(
+                [29.88783, -97.941214],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_d594346955cd40b181688f9875f6db0a);
+        
+    
+        var popup_ee88f87b0eface6d29ee5fab2817ddef = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_623cb9ea9bf68f2803e236979a8553cd = $(`<div id="html_623cb9ea9bf68f2803e236979a8553cd" style="width: 100.0%; height: 100.0%;">Retama<br>Desirability: 0.448</div>`)[0];
+                popup_ee88f87b0eface6d29ee5fab2817ddef.setContent(html_623cb9ea9bf68f2803e236979a8553cd);
+            
+        
+
+        circle_marker_417306e034db997db3f9fb35c2f6f33d.bindPopup(popup_ee88f87b0eface6d29ee5fab2817ddef)
+        ;
+
+        
+    
+    
+            circle_marker_417306e034db997db3f9fb35c2f6f33d.bindTooltip(
+                `<div>
+                     Retama
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_4114aace8a133749325de7618cbc42f2 = L.circleMarker(
+                [29.88692499999999, -97.944083],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_d594346955cd40b181688f9875f6db0a);
+        
+    
+        var popup_2517f746deeafbe9fb8859612112563d = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_e0eb2dc337076df8c67959575c6daec6 = $(`<div id="html_e0eb2dc337076df8c67959575c6daec6" style="width: 100.0%; height: 100.0%;">San Jacinto<br>Desirability: 0.686</div>`)[0];
+                popup_2517f746deeafbe9fb8859612112563d.setContent(html_e0eb2dc337076df8c67959575c6daec6);
+            
+        
+
+        circle_marker_4114aace8a133749325de7618cbc42f2.bindPopup(popup_2517f746deeafbe9fb8859612112563d)
+        ;
+
+        
+    
+    
+            circle_marker_4114aace8a133749325de7618cbc42f2.bindTooltip(
+                `<div>
+                     San Jacinto
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_0065ca258fa50666b6aa4a597f865cb5 = L.circleMarker(
+                [29.88692409999999, -97.9486761],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_d594346955cd40b181688f9875f6db0a);
+        
+    
+        var popup_b4d9c9b783277f4de8348d3f55af4179 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_2e478a1f3230ae396a2db2a53e1cee13 = $(`<div id="html_2e478a1f3230ae396a2db2a53e1cee13" style="width: 100.0%; height: 100.0%;">San Marcos<br>Desirability: 0.516</div>`)[0];
+                popup_b4d9c9b783277f4de8348d3f55af4179.setContent(html_2e478a1f3230ae396a2db2a53e1cee13);
+            
+        
+
+        circle_marker_0065ca258fa50666b6aa4a597f865cb5.bindPopup(popup_b4d9c9b783277f4de8348d3f55af4179)
+        ;
+
+        
+    
+    
+            circle_marker_0065ca258fa50666b6aa4a597f865cb5.bindTooltip(
+                `<div>
+                     San Marcos
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_c428a9c30a06396bcb62e8f6e26cd30a = L.circleMarker(
+                [29.8863734, -97.9509257],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_d594346955cd40b181688f9875f6db0a);
+        
+    
+        var popup_9ac552a4e20e547037b222d149f597b9 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_345251a8cac2c5a448f5293b411ee913 = $(`<div id="html_345251a8cac2c5a448f5293b411ee913" style="width: 100.0%; height: 100.0%;">Sayers<br>Desirability: 0.480</div>`)[0];
+                popup_9ac552a4e20e547037b222d149f597b9.setContent(html_345251a8cac2c5a448f5293b411ee913);
+            
+        
+
+        circle_marker_c428a9c30a06396bcb62e8f6e26cd30a.bindPopup(popup_9ac552a4e20e547037b222d149f597b9)
+        ;
+
+        
+    
+    
+            circle_marker_c428a9c30a06396bcb62e8f6e26cd30a.bindTooltip(
+                `<div>
+                     Sayers
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_5e89989dc07538eb28d6a306bca971a8 = L.circleMarker(
+                [29.8863414, -97.9398855],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_d594346955cd40b181688f9875f6db0a);
+        
+    
+        var popup_b580943a78be52a2c5c4db0530171470 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_e13cceee0e2a48b5026a658b36132878 = $(`<div id="html_e13cceee0e2a48b5026a658b36132878" style="width: 100.0%; height: 100.0%;">Sterry Hall<br>Desirability: 0.594</div>`)[0];
+                popup_b580943a78be52a2c5c4db0530171470.setContent(html_e13cceee0e2a48b5026a658b36132878);
+            
+        
+
+        circle_marker_5e89989dc07538eb28d6a306bca971a8.bindPopup(popup_b580943a78be52a2c5c4db0530171470)
+        ;
+
+        
+    
+    
+            circle_marker_5e89989dc07538eb28d6a306bca971a8.bindTooltip(
+                `<div>
+                     Sterry Hall
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_e150c0a240a62090b82b3a35221557ac = L.circleMarker(
+                [29.8869345, -97.9430557],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_d594346955cd40b181688f9875f6db0a);
+        
+    
+        var popup_79ab422351e6f6ba7399dddb2c4d5743 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_90a2232eb1368adadbb930ab4f295bda = $(`<div id="html_90a2232eb1368adadbb930ab4f295bda" style="width: 100.0%; height: 100.0%;">Tower<br>Desirability: 0.554</div>`)[0];
+                popup_79ab422351e6f6ba7399dddb2c4d5743.setContent(html_90a2232eb1368adadbb930ab4f295bda);
+            
+        
+
+        circle_marker_e150c0a240a62090b82b3a35221557ac.bindPopup(popup_79ab422351e6f6ba7399dddb2c4d5743)
+        ;
+
+        
+    
+    
+            circle_marker_e150c0a240a62090b82b3a35221557ac.bindTooltip(
+                `<div>
+                     Tower
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_428528c1adebac92c4b63d48d570a238 = L.circleMarker(
+                [29.890614, 97.945516],
+                {"bubblingMouseEvents": true, "color": "gray", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "gray", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 3}
+            ).addTo(map_d594346955cd40b181688f9875f6db0a);
+        
+    
+        var popup_9e73c6395dd26b9128fcd7c737b61ca7 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_2fd3549eea0f18d612de0ecc7db59ec4 = $(`<div id="html_2fd3549eea0f18d612de0ecc7db59ec4" style="width: 100.0%; height: 100.0%;">Existing Parking: R56-SHC Thorpe<br>Spaces: 10</div>`)[0];
+                popup_9e73c6395dd26b9128fcd7c737b61ca7.setContent(html_2fd3549eea0f18d612de0ecc7db59ec4);
+            
+        
+
+        circle_marker_428528c1adebac92c4b63d48d570a238.bindPopup(popup_9e73c6395dd26b9128fcd7c737b61ca7)
+        ;
+
+        
+    
+    
+            circle_marker_428528c1adebac92c4b63d48d570a238.bindTooltip(
+                `<div>
+                     Parking: R56-SHC Thorpe
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_01da207685ee607c30eccd19c9d69b1b = L.circleMarker(
+                [29.886277, -97.948777],
+                {"bubblingMouseEvents": true, "color": "gray", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "gray", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 3}
+            ).addTo(map_d594346955cd40b181688f9875f6db0a);
+        
+    
+        var popup_8bd3ca1fdf73dc45470d798a4ea479b8 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_8cb6658e59e31175d29805effbba4954 = $(`<div id="html_8cb6658e59e31175d29805effbba4954" style="width: 100.0%; height: 100.0%;">Existing Parking: 301-Llano Drive<br>Spaces: 95</div>`)[0];
+                popup_8bd3ca1fdf73dc45470d798a4ea479b8.setContent(html_8cb6658e59e31175d29805effbba4954);
+            
+        
+
+        circle_marker_01da207685ee607c30eccd19c9d69b1b.bindPopup(popup_8bd3ca1fdf73dc45470d798a4ea479b8)
+        ;
+
+        
+    
+    
+            circle_marker_01da207685ee607c30eccd19c9d69b1b.bindTooltip(
+                `<div>
+                     Parking: 301-Llano Drive
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_61d26cd167907271e6c1dd8e96086cab = L.circleMarker(
+                [29.889331, -97.94639],
+                {"bubblingMouseEvents": true, "color": "gray", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "gray", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 3}
+            ).addTo(map_d594346955cd40b181688f9875f6db0a);
+        
+    
+        var popup_c71ecffdded8a116667a485ab877c475 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_aefd77e293b2b199bc526eeebf31ab26 = $(`<div id="html_aefd77e293b2b199bc526eeebf31ab26" style="width: 100.0%; height: 100.0%;">Existing Parking: 202-College Inn<br>Spaces: 30</div>`)[0];
+                popup_c71ecffdded8a116667a485ab877c475.setContent(html_aefd77e293b2b199bc526eeebf31ab26);
+            
+        
+
+        circle_marker_61d26cd167907271e6c1dd8e96086cab.bindPopup(popup_c71ecffdded8a116667a485ab877c475)
+        ;
+
+        
+    
+    
+            circle_marker_61d26cd167907271e6c1dd8e96086cab.bindTooltip(
+                `<div>
+                     Parking: 202-College Inn
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_e35ee72c7cfda67cadaec46b3f1cbc4b = L.circleMarker(
+                [29.886604, -97.945323],
+                {"bubblingMouseEvents": true, "color": "gray", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "gray", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 3}
+            ).addTo(map_d594346955cd40b181688f9875f6db0a);
+        
+    
+        var popup_98eb12599c38bc81031810e10c3f0f87 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_c297fcad9f1e785676eba6c3d342ed5d = $(`<div id="html_c297fcad9f1e785676eba6c3d342ed5d" style="width: 100.0%; height: 100.0%;">Existing Parking: 115-Residential<br>Spaces: 85</div>`)[0];
+                popup_98eb12599c38bc81031810e10c3f0f87.setContent(html_c297fcad9f1e785676eba6c3d342ed5d);
+            
+        
+
+        circle_marker_e35ee72c7cfda67cadaec46b3f1cbc4b.bindPopup(popup_98eb12599c38bc81031810e10c3f0f87)
+        ;
+
+        
+    
+    
+            circle_marker_e35ee72c7cfda67cadaec46b3f1cbc4b.bindTooltip(
+                `<div>
+                     Parking: 115-Residential
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_a6d2ad4e25a3ff93e88ac348c6508477 = L.circleMarker(
+                [29.885832, -97.939751],
+                {"bubblingMouseEvents": true, "color": "gray", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "gray", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 3}
+            ).addTo(map_d594346955cd40b181688f9875f6db0a);
+        
+    
+        var popup_8793ac91d4dae570c3a6b4baac8a6d3a = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_1003fd5706734087e4cc25b5cf5ac7f5 = $(`<div id="html_1003fd5706734087e4cc25b5cf5ac7f5" style="width: 100.0%; height: 100.0%;">Existing Parking: Edward Gary St Garage<br>Spaces: 196</div>`)[0];
+                popup_8793ac91d4dae570c3a6b4baac8a6d3a.setContent(html_1003fd5706734087e4cc25b5cf5ac7f5);
+            
+        
+
+        circle_marker_a6d2ad4e25a3ff93e88ac348c6508477.bindPopup(popup_8793ac91d4dae570c3a6b4baac8a6d3a)
+        ;
+
+        
+    
+    
+            circle_marker_a6d2ad4e25a3ff93e88ac348c6508477.bindTooltip(
+                `<div>
+                     Parking: Edward Gary St Garage
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_5d2641523560150e08e485c438f71221 = L.circleMarker(
+                [29.887076, -97.944402],
+                {"bubblingMouseEvents": true, "color": "gray", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "gray", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 3}
+            ).addTo(map_d594346955cd40b181688f9875f6db0a);
+        
+    
+        var popup_4c25ccf921fe5c57f380f09b0bcffef1 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_eac7e10ee611b7125e112a6e004d34f2 = $(`<div id="html_eac7e10ee611b7125e112a6e004d34f2" style="width: 100.0%; height: 100.0%;">Existing Parking: 112-San Jacinto Hall<br>Spaces: 60</div>`)[0];
+                popup_4c25ccf921fe5c57f380f09b0bcffef1.setContent(html_eac7e10ee611b7125e112a6e004d34f2);
+            
+        
+
+        circle_marker_5d2641523560150e08e485c438f71221.bindPopup(popup_4c25ccf921fe5c57f380f09b0bcffef1)
+        ;
+
+        
+    
+    
+            circle_marker_5d2641523560150e08e485c438f71221.bindTooltip(
+                `<div>
+                     Parking: 112-San Jacinto Hall
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_f40dbef3fb5b154aa8185615b8ea43ae = L.circleMarker(
+                [29.886425, -97.942881],
+                {"bubblingMouseEvents": true, "color": "gray", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "gray", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 3}
+            ).addTo(map_d594346955cd40b181688f9875f6db0a);
+        
+    
+        var popup_15e377b42dfbc2ba79a4deff13065fae = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_cbd7549d35a22e03cf633a77bf5a6c24 = $(`<div id="html_cbd7549d35a22e03cf633a77bf5a6c24" style="width: 100.0%; height: 100.0%;">Existing Parking: 105-Admissions<br>Spaces: 35</div>`)[0];
+                popup_15e377b42dfbc2ba79a4deff13065fae.setContent(html_cbd7549d35a22e03cf633a77bf5a6c24);
+            
+        
+
+        circle_marker_f40dbef3fb5b154aa8185615b8ea43ae.bindPopup(popup_15e377b42dfbc2ba79a4deff13065fae)
+        ;
+
+        
+    
+    
+            circle_marker_f40dbef3fb5b154aa8185615b8ea43ae.bindTooltip(
+                `<div>
+                     Parking: 105-Admissions
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_e9649b6d2e075ed838a4797281f7cb7f = L.circleMarker(
+                [29.890612, -97.944559],
+                {"bubblingMouseEvents": true, "color": "gray", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "gray", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 3}
+            ).addTo(map_d594346955cd40b181688f9875f6db0a);
+        
+    
+        var popup_37abad75dac47fb46acb81065fa30e10 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_b8bfe6cafb7a1582862cb8e861f01c99 = $(`<div id="html_b8bfe6cafb7a1582862cb8e861f01c99" style="width: 100.0%; height: 100.0%;">Existing Parking: 204-Jackson<br>Spaces: 46</div>`)[0];
+                popup_37abad75dac47fb46acb81065fa30e10.setContent(html_b8bfe6cafb7a1582862cb8e861f01c99);
+            
+        
+
+        circle_marker_e9649b6d2e075ed838a4797281f7cb7f.bindPopup(popup_37abad75dac47fb46acb81065fa30e10)
+        ;
+
+        
+    
+    
+            circle_marker_e9649b6d2e075ed838a4797281f7cb7f.bindTooltip(
+                `<div>
+                     Parking: 204-Jackson
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_ea09452581899f0db8e9bf39b11263f7 = L.circleMarker(
+                [29.885917, -97.947639],
+                {"bubblingMouseEvents": true, "color": "gray", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "gray", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 3}
+            ).addTo(map_d594346955cd40b181688f9875f6db0a);
+        
+    
+        var popup_b05a3a85bf483ad9b4991afc5aa200b0 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_9a3008ab0118cb87c84beccf98d502cd = $(`<div id="html_9a3008ab0118cb87c84beccf98d502cd" style="width: 100.0%; height: 100.0%;">Existing Parking: 304-Academy Garage<br>Spaces: 462</div>`)[0];
+                popup_b05a3a85bf483ad9b4991afc5aa200b0.setContent(html_9a3008ab0118cb87c84beccf98d502cd);
+            
+        
+
+        circle_marker_ea09452581899f0db8e9bf39b11263f7.bindPopup(popup_b05a3a85bf483ad9b4991afc5aa200b0)
+        ;
+
+        
+    
+    
+            circle_marker_ea09452581899f0db8e9bf39b11263f7.bindTooltip(
+                `<div>
+                     Parking: 304-Academy Garage
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_c995e9f973c8afbfe15393b02ea950c8 = L.circleMarker(
+                [29.887755, -97.953557],
+                {"bubblingMouseEvents": true, "color": "gray", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "gray", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 3}
+            ).addTo(map_d594346955cd40b181688f9875f6db0a);
+        
+    
+        var popup_cfed13b5413dae14f724a0c28b4377d9 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_702c7fafac9bbc9f9507b3a82d423dd8 = $(`<div id="html_702c7fafac9bbc9f9507b3a82d423dd8" style="width: 100.0%; height: 100.0%;">Existing Parking: 303-Blanco Garage<br>Spaces: 271</div>`)[0];
+                popup_cfed13b5413dae14f724a0c28b4377d9.setContent(html_702c7fafac9bbc9f9507b3a82d423dd8);
+            
+        
+
+        circle_marker_c995e9f973c8afbfe15393b02ea950c8.bindPopup(popup_cfed13b5413dae14f724a0c28b4377d9)
+        ;
+
+        
+    
+    
+            circle_marker_c995e9f973c8afbfe15393b02ea950c8.bindTooltip(
+                `<div>
+                     Parking: 303-Blanco Garage
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_459f0ac868baba72a57a2e97494d5549 = L.circleMarker(
+                [29.887299, -97.942917],
+                {"bubblingMouseEvents": true, "color": "gray", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "gray", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 3}
+            ).addTo(map_d594346955cd40b181688f9875f6db0a);
+        
+    
+        var popup_6e4cf854dcf62c3d6ec0a7bcc8320762 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_2d9a3266a4ed891a6848bb328f33f8a3 = $(`<div id="html_2d9a3266a4ed891a6848bb328f33f8a3" style="width: 100.0%; height: 100.0%;">Existing Parking: 106-Tower Garage<br>Spaces: 249</div>`)[0];
+                popup_6e4cf854dcf62c3d6ec0a7bcc8320762.setContent(html_2d9a3266a4ed891a6848bb328f33f8a3);
+            
+        
+
+        circle_marker_459f0ac868baba72a57a2e97494d5549.bindPopup(popup_6e4cf854dcf62c3d6ec0a7bcc8320762)
+        ;
+
+        
+    
+    
+            circle_marker_459f0ac868baba72a57a2e97494d5549.bindTooltip(
+                `<div>
+                     Parking: 106-Tower Garage
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_045df8642e5e58fb3bf79d4d87af012b = L.circleMarker(
+                [29.890936, -97.953764],
+                {"bubblingMouseEvents": true, "color": "gray", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "gray", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 3}
+            ).addTo(map_d594346955cd40b181688f9875f6db0a);
+        
+    
+        var popup_a0928e2973081c6ee539fe06e8e16f5e = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_3e2345a2177837e88361fe2efdfb1eaf = $(`<div id="html_3e2345a2177837e88361fe2efdfb1eaf" style="width: 100.0%; height: 100.0%;">Existing Parking: 306-Speck Garage<br>Spaces: 342</div>`)[0];
+                popup_a0928e2973081c6ee539fe06e8e16f5e.setContent(html_3e2345a2177837e88361fe2efdfb1eaf);
+            
+        
+
+        circle_marker_045df8642e5e58fb3bf79d4d87af012b.bindPopup(popup_a0928e2973081c6ee539fe06e8e16f5e)
+        ;
+
+        
+    
+    
+            circle_marker_045df8642e5e58fb3bf79d4d87af012b.bindTooltip(
+                `<div>
+                     Parking: 306-Speck Garage
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_64eb750a09d47497ce5079894143cf44 = L.circleMarker(
+                [29.887076, -97.944402],
+                {"bubblingMouseEvents": true, "color": "gray", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "gray", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 3}
+            ).addTo(map_d594346955cd40b181688f9875f6db0a);
+        
+    
+        var popup_f8cd9f7cc34da68dfe3367a43421ca7a = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_a46a9445d3181ebe08b5760f7b12b1cc = $(`<div id="html_a46a9445d3181ebe08b5760f7b12b1cc" style="width: 100.0%; height: 100.0%;">Existing Parking: 108-Wood St Garage<br>Spaces: 275</div>`)[0];
+                popup_f8cd9f7cc34da68dfe3367a43421ca7a.setContent(html_a46a9445d3181ebe08b5760f7b12b1cc);
+            
+        
+
+        circle_marker_64eb750a09d47497ce5079894143cf44.bindPopup(popup_f8cd9f7cc34da68dfe3367a43421ca7a)
+        ;
+
+        
+    
+    
+            circle_marker_64eb750a09d47497ce5079894143cf44.bindTooltip(
+                `<div>
+                     Parking: 108-Wood St Garage
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_a623f5408408082aedd8a4e140e2444b = L.circleMarker(
+                [29.889411, -97.946351],
+                {"bubblingMouseEvents": true, "color": "gray", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "gray", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 3}
+            ).addTo(map_d594346955cd40b181688f9875f6db0a);
+        
+    
+        var popup_d4804b8489af89eb9e784704fbe3256e = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_89caff3400c41564cfe7f69e4bf73733 = $(`<div id="html_89caff3400c41564cfe7f69e4bf73733" style="width: 100.0%; height: 100.0%;">Existing Parking: 307-ASGH<br>Spaces: 12</div>`)[0];
+                popup_d4804b8489af89eb9e784704fbe3256e.setContent(html_89caff3400c41564cfe7f69e4bf73733);
+            
+        
+
+        circle_marker_a623f5408408082aedd8a4e140e2444b.bindPopup(popup_d4804b8489af89eb9e784704fbe3256e)
+        ;
+
+        
+    
+    
+            circle_marker_a623f5408408082aedd8a4e140e2444b.bindTooltip(
+                `<div>
+                     Parking: 307-ASGH
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_1bb971f0f117bbf02940d511796c55b4 = L.circleMarker(
+                [29.886925, -97.944383],
+                {"bubblingMouseEvents": true, "color": "gray", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "gray", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 3}
+            ).addTo(map_d594346955cd40b181688f9875f6db0a);
+        
+    
+        var popup_e3389d8bee05af68fa872346c30d91ca = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_543a8042e5240965496dddcaa1b30bf8 = $(`<div id="html_543a8042e5240965496dddcaa1b30bf8" style="width: 100.0%; height: 100.0%;">Existing Parking: 112-San Jacinto Garage<br>Spaces: 227</div>`)[0];
+                popup_e3389d8bee05af68fa872346c30d91ca.setContent(html_543a8042e5240965496dddcaa1b30bf8);
+            
+        
+
+        circle_marker_1bb971f0f117bbf02940d511796c55b4.bindPopup(popup_e3389d8bee05af68fa872346c30d91ca)
+        ;
+
+        
+    
+    
+            circle_marker_1bb971f0f117bbf02940d511796c55b4.bindTooltip(
+                `<div>
+                     Parking: 112-San Jacinto Garage
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_c277268bb22ba365c3abd6bf2d63bf53 = L.circleMarker(
+                [29.890875, -97.94356],
+                {"bubblingMouseEvents": true, "color": "gray", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "gray", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 3}
+            ).addTo(map_d594346955cd40b181688f9875f6db0a);
+        
+    
+        var popup_bff5d8b9c3bd35392c4196650b8bbd76 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_4d0dd3a40512a5e3e8ab1f8ed88b9e70 = $(`<div id="html_4d0dd3a40512a5e3e8ab1f8ed88b9e70" style="width: 100.0%; height: 100.0%;">Existing Parking: 113-Matthews Street Garage<br>Spaces: 628</div>`)[0];
+                popup_bff5d8b9c3bd35392c4196650b8bbd76.setContent(html_4d0dd3a40512a5e3e8ab1f8ed88b9e70);
+            
+        
+
+        circle_marker_c277268bb22ba365c3abd6bf2d63bf53.bindPopup(popup_bff5d8b9c3bd35392c4196650b8bbd76)
+        ;
+
+        
+    
+    
+            circle_marker_c277268bb22ba365c3abd6bf2d63bf53.bindTooltip(
+                `<div>
+                     Parking: 113-Matthews Street Garage
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_2bd6ea7bfa1f11ff029ff003fb0a2602 = L.circleMarker(
+                [-97.943473322056, 29.8903241807562],
+                {"bubblingMouseEvents": true, "color": "gray", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "gray", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 3}
+            ).addTo(map_d594346955cd40b181688f9875f6db0a);
+        
+    
+        var popup_c423694345ffefacd6611a7bb1dedb94 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_79682b5c05566526f8c55c8d81d5366c = $(`<div id="html_79682b5c05566526f8c55c8d81d5366c" style="width: 100.0%; height: 100.0%;">Existing Parking: 204-Jackson Rear<br>Spaces: 46</div>`)[0];
+                popup_c423694345ffefacd6611a7bb1dedb94.setContent(html_79682b5c05566526f8c55c8d81d5366c);
+            
+        
+
+        circle_marker_2bd6ea7bfa1f11ff029ff003fb0a2602.bindPopup(popup_c423694345ffefacd6611a7bb1dedb94)
+        ;
+
+        
+    
+    
+            circle_marker_2bd6ea7bfa1f11ff029ff003fb0a2602.bindTooltip(
+                `<div>
+                     Parking: 204-Jackson Rear
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_b439b038b7a1221fbec5a7bad44fe390 = L.circleMarker(
+                [29.886483336151997, -97.95057498645716],
+                {"bubblingMouseEvents": true, "color": "gray", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "gray", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 3}
+            ).addTo(map_d594346955cd40b181688f9875f6db0a);
+        
+    
+        var popup_12fa315d4e26a1639333ebef884d4563 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_71bba8f56ecdbc9f3b71a70610b817b7 = $(`<div id="html_71bba8f56ecdbc9f3b71a70610b817b7" style="width: 100.0%; height: 100.0%;">Existing Parking: 305-Moore Street<br>Spaces: 121</div>`)[0];
+                popup_12fa315d4e26a1639333ebef884d4563.setContent(html_71bba8f56ecdbc9f3b71a70610b817b7);
+            
+        
+
+        circle_marker_b439b038b7a1221fbec5a7bad44fe390.bindPopup(popup_12fa315d4e26a1639333ebef884d4563)
+        ;
+
+        
+    
+    
+            circle_marker_b439b038b7a1221fbec5a7bad44fe390.bindTooltip(
+                `<div>
+                     Parking: 305-Moore Street
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_24164d34b38153f64d350ffaad415866 = L.circleMarker(
+                [29.88588095128971, -97.93967006308584],
+                {"bubblingMouseEvents": true, "color": "gray", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "gray", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 3}
+            ).addTo(map_d594346955cd40b181688f9875f6db0a);
+        
+    
+        var popup_69c197124afc3762827aa47d12377ad9 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_462510a03fec7c3c6b35a6ce3280c66b = $(`<div id="html_462510a03fec7c3c6b35a6ce3280c66b" style="width: 100.0%; height: 100.0%;">Existing Parking: Edward Gary Streer Garage<br>Spaces: 285</div>`)[0];
+                popup_69c197124afc3762827aa47d12377ad9.setContent(html_462510a03fec7c3c6b35a6ce3280c66b);
+            
+        
+
+        circle_marker_24164d34b38153f64d350ffaad415866.bindPopup(popup_69c197124afc3762827aa47d12377ad9)
+        ;
+
+        
+    
+    
+            circle_marker_24164d34b38153f64d350ffaad415866.bindTooltip(
+                `<div>
+                     Parking: Edward Gary Streer Garage
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_9170e53feb9332c1c7fb58a722807c91 = L.circleMarker(
+                [29.88973804916745, -97.943735796654],
+                {"bubblingMouseEvents": true, "color": "gray", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "gray", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 3}
+            ).addTo(map_d594346955cd40b181688f9875f6db0a);
+        
+    
+        var popup_32eb44ee1ba66142fd06ac15db011bfb = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_1a57fe333bf7454eab451aa019764894 = $(`<div id="html_1a57fe333bf7454eab451aa019764894" style="width: 100.0%; height: 100.0%;">Existing Parking: Russell Street<br>Spaces: 7</div>`)[0];
+                popup_32eb44ee1ba66142fd06ac15db011bfb.setContent(html_1a57fe333bf7454eab451aa019764894);
+            
+        
+
+        circle_marker_9170e53feb9332c1c7fb58a722807c91.bindPopup(popup_32eb44ee1ba66142fd06ac15db011bfb)
+        ;
+
+        
+    
+    
+            circle_marker_9170e53feb9332c1c7fb58a722807c91.bindTooltip(
+                `<div>
+                     Parking: Russell Street
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_6ac560372d6a40083a32ab2354c7b6f5 = L.circleMarker(
+                [29.89008130431256, -97.94327374995864],
+                {"bubblingMouseEvents": true, "color": "gray", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "gray", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 3}
+            ).addTo(map_d594346955cd40b181688f9875f6db0a);
+        
+    
+        var popup_89bb3ba4a91bcf4075b00583f3236a7d = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_946d8726970180fb76bb0059fddaaf4d = $(`<div id="html_946d8726970180fb76bb0059fddaaf4d" style="width: 100.0%; height: 100.0%;">Existing Parking: Student Ctr Dr/Arnold<br>Spaces: 15</div>`)[0];
+                popup_89bb3ba4a91bcf4075b00583f3236a7d.setContent(html_946d8726970180fb76bb0059fddaaf4d);
+            
+        
+
+        circle_marker_6ac560372d6a40083a32ab2354c7b6f5.bindPopup(popup_89bb3ba4a91bcf4075b00583f3236a7d)
+        ;
+
+        
+    
+    
+            circle_marker_6ac560372d6a40083a32ab2354c7b6f5.bindTooltip(
+                `<div>
+                     Parking: Student Ctr Dr/Arnold
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_4e4678eb1b4e5907266a08415fc01da0 = L.circleMarker(
+                [29.8881351, -97.9514144],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10, "stroke": true, "weight": 3}
+            ).addTo(map_d594346955cd40b181688f9875f6db0a);
+        
+    
+        var popup_47a0541b66df1f82f3c2128c8bc3b5c8 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_221583d202ad0d27340a039e4c80d636 = $(`<div id="html_221583d202ad0d27340a039e4c80d636" style="width: 100.0%; height: 100.0%;">             <div style="font-family: Arial; min-width: 200px;">                 <h4 style="margin: 0;">Recommended Spot 1</h4>                 <hr style="margin: 5px 0;">                 <p style="margin: 5px 0;">                     <b>Score:</b> 0.489<br>                     <b>Nearest Dorm:</b> Blanco<br>                     <b>Distance to Parking:</b> 0.201 km<br>                     <b>Nearby Dorms:</b> Blanco, Bexar                 </p>             </div>         </div>`)[0];
+                popup_47a0541b66df1f82f3c2128c8bc3b5c8.setContent(html_221583d202ad0d27340a039e4c80d636);
+            
+        
+
+        circle_marker_4e4678eb1b4e5907266a08415fc01da0.bindPopup(popup_47a0541b66df1f82f3c2128c8bc3b5c8)
+        ;
+
+        
+    
+    
+            circle_marker_4e4678eb1b4e5907266a08415fc01da0.bindTooltip(
+                `<div>
+                     Recommended Spot 1
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+</script>
+</html>

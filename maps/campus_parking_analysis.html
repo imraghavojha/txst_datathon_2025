@@ -1,0 +1,1562 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_eebd92e59ceba085b307e8bc06af26db {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+    <script src="https://cdn.jsdelivr.net/gh/python-visualization/folium@main/folium/templates/leaflet_heat.min.js"></script>
+</head>
+<body>
+    
+    
+        <div style="position: fixed; bottom: 50px; right: 50px; width: 200px;
+                    z-index:9999; background-color: white; padding: 10px; border: 2px solid gray;">
+            <h4 style="margin-top: 0;">Legend</h4>
+            <div style="margin: 5px 0;">
+                <span style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; 
+                           background-color: #00ff00; margin-right: 5px;"></span>
+                High Desirability Dorm
+            </div>
+            <div style="margin: 5px 0;">
+                <span style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; 
+                           background-color: #ff0000; margin-right: 5px;"></span>
+                Low Desirability Dorm
+            </div>
+            <div style="margin: 5px 0;">
+                <span style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; 
+                           background-color: blue; margin-right: 5px;"></span>
+                Existing Parking
+            </div>
+            <div style="font-size: 12px; margin-top: 10px;">
+                • Circle size indicates student population<br>
+                • Color indicates desirability score<br>
+                • Heatmap shows student density
+            </div>
+        </div>
+    
+    
+            <div class="folium-map" id="map_eebd92e59ceba085b307e8bc06af26db" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_eebd92e59ceba085b307e8bc06af26db = L.map(
+                "map_eebd92e59ceba085b307e8bc06af26db",
+                {
+                    center: [29.889, -97.942],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 15,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_efd446989b61f27050f5f5f2693cd07d = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_efd446989b61f27050f5f5f2693cd07d.addTo(map_eebd92e59ceba085b307e8bc06af26db);
+        
+    
+            var feature_group_e321c52ff72811c027e6d81a2c252ba8 = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var circle_marker_93c2c8be20923c01e3996316208342ee = L.circleMarker(
+                [29.8907069, -97.9421424],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ba4400", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7.49073501808141, "stroke": true, "weight": 2}
+            ).addTo(feature_group_e321c52ff72811c027e6d81a2c252ba8);
+        
+    
+        var popup_f8882676735f8c07159e0851f176f849 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_367b9a67fa0a90e86d32744375a16e43 = $(`<div id="html_367b9a67fa0a90e86d32744375a16e43" style="width: 100.0%; height: 100.0%;">             <div style="font-family: Arial; min-width: 200px;">                 <h4 style="margin: 0;">Alamito</h4>                 <hr style="margin: 5px 0;">                 <p style="margin: 5px 0;">                     <b>Students:</b> 505<br>                     <b>Desirability Score:</b> 0.270<br>                          </p>             </div>         </div>`)[0];
+                popup_f8882676735f8c07159e0851f176f849.setContent(html_367b9a67fa0a90e86d32744375a16e43);
+            
+        
+
+        circle_marker_93c2c8be20923c01e3996316208342ee.bindPopup(popup_f8882676735f8c07159e0851f176f849)
+        ;
+
+        
+    
+    
+            circle_marker_93c2c8be20923c01e3996316208342ee.bindTooltip(
+                `<div>
+                     Alamito
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_5d1eb8df05205cdeaa591a40b11e722b = L.circleMarker(
+                [29.888411, -97.938351],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2200", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6.912147117775906, "stroke": true, "weight": 2}
+            ).addTo(feature_group_e321c52ff72811c027e6d81a2c252ba8);
+        
+    
+        var popup_b44b45264b6cc905103d20e1172cc0ea = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_86028ef3d6023f4e52afcae8536d7515 = $(`<div id="html_86028ef3d6023f4e52afcae8536d7515" style="width: 100.0%; height: 100.0%;">             <div style="font-family: Arial; min-width: 200px;">                 <h4 style="margin: 0;">Balcones</h4>                 <hr style="margin: 5px 0;">                 <p style="margin: 5px 0;">                     <b>Students:</b> 430<br>                     <b>Desirability Score:</b> 0.137<br>                          </p>             </div>         </div>`)[0];
+                popup_b44b45264b6cc905103d20e1172cc0ea.setContent(html_86028ef3d6023f4e52afcae8536d7515);
+            
+        
+
+        circle_marker_5d1eb8df05205cdeaa591a40b11e722b.bindPopup(popup_b44b45264b6cc905103d20e1172cc0ea)
+        ;
+
+        
+    
+    
+            circle_marker_5d1eb8df05205cdeaa591a40b11e722b.bindTooltip(
+                `<div>
+                     Balcones
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_2059a10222e722923ec14c33a84fd0cf = L.circleMarker(
+                [29.8863769, -97.9480979],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#689600", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6.60807586719967, "stroke": true, "weight": 2}
+            ).addTo(feature_group_e321c52ff72811c027e6d81a2c252ba8);
+        
+    
+        var popup_fc5575d5d5720f51b2aed63614930314 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_01f96e4ee0f7eb716b2f6c6b44d84427 = $(`<div id="html_01f96e4ee0f7eb716b2f6c6b44d84427" style="width: 100.0%; height: 100.0%;">             <div style="font-family: Arial; min-width: 200px;">                 <h4 style="margin: 0;">Bexar</h4>                 <hr style="margin: 5px 0;">                 <p style="margin: 5px 0;">                     <b>Students:</b> 393<br>                     <b>Desirability Score:</b> 0.592<br>                              <b>Bed Capacity:</b> 202<br>                     <b>Parking Spaces:</b> 209<br>                     <b>Current Usage:</b> N/A                              </p>             </div>         </div>`)[0];
+                popup_fc5575d5d5720f51b2aed63614930314.setContent(html_01f96e4ee0f7eb716b2f6c6b44d84427);
+            
+        
+
+        circle_marker_2059a10222e722923ec14c33a84fd0cf.bindPopup(popup_fc5575d5d5720f51b2aed63614930314)
+        ;
+
+        
+    
+    
+            circle_marker_2059a10222e722923ec14c33a84fd0cf.bindTooltip(
+                `<div>
+                     Bexar
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_bd26d6bfcc5418af43a6d6f16d020b42 = L.circleMarker(
+                [29.8871351, -97.9519144],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#629c00", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 13.148721948877347, "stroke": true, "weight": 2}
+            ).addTo(feature_group_e321c52ff72811c027e6d81a2c252ba8);
+        
+    
+        var popup_6004a394293ff8afb5af9293d6dc6201 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_87d7a7003bb50df09cd3b7cceb26fccc = $(`<div id="html_87d7a7003bb50df09cd3b7cceb26fccc" style="width: 100.0%; height: 100.0%;">             <div style="font-family: Arial; min-width: 200px;">                 <h4 style="margin: 0;">Blanco</h4>                 <hr style="margin: 5px 0;">                 <p style="margin: 5px 0;">                     <b>Students:</b> 1556<br>                     <b>Desirability Score:</b> 0.613<br>                              <b>Bed Capacity:</b> 594<br>                     <b>Parking Spaces:</b> 168<br>                     <b>Current Usage:</b> 0                              </p>             </div>         </div>`)[0];
+                popup_6004a394293ff8afb5af9293d6dc6201.setContent(html_87d7a7003bb50df09cd3b7cceb26fccc);
+            
+        
+
+        circle_marker_bd26d6bfcc5418af43a6d6f16d020b42.bindPopup(popup_6004a394293ff8afb5af9293d6dc6201)
+        ;
+
+        
+    
+    
+            circle_marker_bd26d6bfcc5418af43a6d6f16d020b42.bindTooltip(
+                `<div>
+                     Blanco
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_5a1cd01be6b5ffe797519445fd0902c2 = L.circleMarker(
+                [29.8931366, -97.9222567],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ee1000", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 11.841546445554407, "stroke": true, "weight": 2}
+            ).addTo(feature_group_e321c52ff72811c027e6d81a2c252ba8);
+        
+    
+        var popup_8320f122ed471dbf2477ef6b08b69064 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_08b1f46973e86ab73c4011b611b58d86 = $(`<div id="html_08b1f46973e86ab73c4011b611b58d86" style="width: 100.0%; height: 100.0%;">             <div style="font-family: Arial; min-width: 200px;">                 <h4 style="margin: 0;">Bobcat Village Apartments</h4>                 <hr style="margin: 5px 0;">                 <p style="margin: 5px 0;">                     <b>Students:</b> 1262<br>                     <b>Desirability Score:</b> 0.064<br>                          </p>             </div>         </div>`)[0];
+                popup_8320f122ed471dbf2477ef6b08b69064.setContent(html_08b1f46973e86ab73c4011b611b58d86);
+            
+        
+
+        circle_marker_5a1cd01be6b5ffe797519445fd0902c2.bindPopup(popup_8320f122ed471dbf2477ef6b08b69064)
+        ;
+
+        
+    
+    
+            circle_marker_5a1cd01be6b5ffe797519445fd0902c2.bindTooltip(
+                `<div>
+                     Bobcat Village Apartments
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_48a03458deafc387c45c9cbd59daa492 = L.circleMarker(
+                [29.8882987, -97.9399],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#976700", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5.022173057773121, "stroke": true, "weight": 2}
+            ).addTo(feature_group_e321c52ff72811c027e6d81a2c252ba8);
+        
+    
+        var popup_4ce3fc9eae0772ce47b3648edc4b1452 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_55807cd3452877b22e3e0cd94afed547 = $(`<div id="html_55807cd3452877b22e3e0cd94afed547" style="width: 100.0%; height: 100.0%;">             <div style="font-family: Arial; min-width: 200px;">                 <h4 style="margin: 0;">Brogdon</h4>                 <hr style="margin: 5px 0;">                 <p style="margin: 5px 0;">                     <b>Students:</b> 227<br>                     <b>Desirability Score:</b> 0.406<br>                          </p>             </div>         </div>`)[0];
+                popup_4ce3fc9eae0772ce47b3648edc4b1452.setContent(html_55807cd3452877b22e3e0cd94afed547);
+            
+        
+
+        circle_marker_48a03458deafc387c45c9cbd59daa492.bindPopup(popup_4ce3fc9eae0772ce47b3648edc4b1452)
+        ;
+
+        
+    
+    
+            circle_marker_48a03458deafc387c45c9cbd59daa492.bindTooltip(
+                `<div>
+                     Brogdon
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_faf75f7fad2db17e90dd05fc91544cec = L.circleMarker(
+                [29.8870394, -97.9389694],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#867800", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7.272474743090476, "stroke": true, "weight": 2}
+            ).addTo(feature_group_e321c52ff72811c027e6d81a2c252ba8);
+        
+    
+        var popup_c793c201b996e64e768220fe1eb93fc2 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_510e0d118ae16fe8fe2d2c25c971e279 = $(`<div id="html_510e0d118ae16fe8fe2d2c25c971e279" style="width: 100.0%; height: 100.0%;">             <div style="font-family: Arial; min-width: 200px;">                 <h4 style="margin: 0;">Butler</h4>                 <hr style="margin: 5px 0;">                 <p style="margin: 5px 0;">                     <b>Students:</b> 476<br>                     <b>Desirability Score:</b> 0.472<br>                              <b>Bed Capacity:</b> 236<br>                     <b>Parking Spaces:</b> 144<br>                     <b>Current Usage:</b> 0                              </p>             </div>         </div>`)[0];
+                popup_c793c201b996e64e768220fe1eb93fc2.setContent(html_510e0d118ae16fe8fe2d2c25c971e279);
+            
+        
+
+        circle_marker_faf75f7fad2db17e90dd05fc91544cec.bindPopup(popup_c793c201b996e64e768220fe1eb93fc2)
+        ;
+
+        
+    
+    
+            circle_marker_faf75f7fad2db17e90dd05fc91544cec.bindTooltip(
+                `<div>
+                     Butler
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_38f46e374aee95640670f766eca6627e = L.circleMarker(
+                [29.8904711, -97.946585],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#916d00", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8.225975119502044, "stroke": true, "weight": 2}
+            ).addTo(feature_group_e321c52ff72811c027e6d81a2c252ba8);
+        
+    
+        var popup_f43785bc41b78a72f5e58a009cc26310 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_a0089d1b75f085baba9313ad79a667b4 = $(`<div id="html_a0089d1b75f085baba9313ad79a667b4" style="width: 100.0%; height: 100.0%;">             <div style="font-family: Arial; min-width: 200px;">                 <h4 style="margin: 0;">Chautauqua</h4>                 <hr style="margin: 5px 0;">                 <p style="margin: 5px 0;">                     <b>Students:</b> 609<br>                     <b>Desirability Score:</b> 0.429<br>                          </p>             </div>         </div>`)[0];
+                popup_f43785bc41b78a72f5e58a009cc26310.setContent(html_a0089d1b75f085baba9313ad79a667b4);
+            
+        
+
+        circle_marker_38f46e374aee95640670f766eca6627e.bindPopup(popup_f43785bc41b78a72f5e58a009cc26310)
+        ;
+
+        
+    
+    
+            circle_marker_38f46e374aee95640670f766eca6627e.bindTooltip(
+                `<div>
+                     Chautauqua
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_e3b7fdaf4dce63605abe686a6f6dd2f4 = L.circleMarker(
+                [29.88933089999999, -97.9463904],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#8a7400", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7.916228058025278, "stroke": true, "weight": 2}
+            ).addTo(feature_group_e321c52ff72811c027e6d81a2c252ba8);
+        
+    
+        var popup_756d85254523588b4a8c020d7a013f00 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_93c5446ff28eb37519768b17f374f728 = $(`<div id="html_93c5446ff28eb37519768b17f374f728" style="width: 100.0%; height: 100.0%;">             <div style="font-family: Arial; min-width: 200px;">                 <h4 style="margin: 0;">College Inn</h4>                 <hr style="margin: 5px 0;">                 <p style="margin: 5px 0;">                     <b>Students:</b> 564<br>                     <b>Desirability Score:</b> 0.456<br>                              <b>Bed Capacity:</b> 280<br>                     <b>Parking Spaces:</b> 30<br>                     <b>Current Usage:</b> 0                              </p>             </div>         </div>`)[0];
+                popup_756d85254523588b4a8c020d7a013f00.setContent(html_93c5446ff28eb37519768b17f374f728);
+            
+        
+
+        circle_marker_e3b7fdaf4dce63605abe686a6f6dd2f4.bindPopup(popup_756d85254523588b4a8c020d7a013f00)
+        ;
+
+        
+    
+    
+            circle_marker_e3b7fdaf4dce63605abe686a6f6dd2f4.bindTooltip(
+                `<div>
+                     College Inn
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_ee46d8fcc5d38db1c9461b711394d577 = L.circleMarker(
+                [29.888411, -97.938351],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#dc2200", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7.852812659593165, "stroke": true, "weight": 2}
+            ).addTo(feature_group_e321c52ff72811c027e6d81a2c252ba8);
+        
+    
+        var popup_e708ca057a3510554b862353e1356656 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_ce1ea2c23a75d55d8d7108cbead425f4 = $(`<div id="html_ce1ea2c23a75d55d8d7108cbead425f4" style="width: 100.0%; height: 100.0%;">             <div style="font-family: Arial; min-width: 200px;">                 <h4 style="margin: 0;">Cypress</h4>                 <hr style="margin: 5px 0;">                 <p style="margin: 5px 0;">                     <b>Students:</b> 555<br>                     <b>Desirability Score:</b> 0.137<br>                          </p>             </div>         </div>`)[0];
+                popup_e708ca057a3510554b862353e1356656.setContent(html_ce1ea2c23a75d55d8d7108cbead425f4);
+            
+        
+
+        circle_marker_ee46d8fcc5d38db1c9461b711394d577.bindPopup(popup_e708ca057a3510554b862353e1356656)
+        ;
+
+        
+    
+    
+            circle_marker_ee46d8fcc5d38db1c9461b711394d577.bindTooltip(
+                `<div>
+                     Cypress
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_8ce882e15d87b7efbd63310f1c13c711 = L.circleMarker(
+                [29.8863734, -97.9509257],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#837b00", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8.04155872120988, "stroke": true, "weight": 2}
+            ).addTo(feature_group_e321c52ff72811c027e6d81a2c252ba8);
+        
+    
+        var popup_a2aa2a2c067e5fd82dc6707f5be52db5 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_75f6af5928061043f3f954b913de0671 = $(`<div id="html_75f6af5928061043f3f954b913de0671" style="width: 100.0%; height: 100.0%;">             <div style="font-family: Arial; min-width: 200px;">                 <h4 style="margin: 0;">Falls</h4>                 <hr style="margin: 5px 0;">                 <p style="margin: 5px 0;">                     <b>Students:</b> 582<br>                     <b>Desirability Score:</b> 0.486<br>                              <b>Bed Capacity:</b> 286<br>                     <b>Parking Spaces:</b> 81<br>                     <b>Current Usage:</b> 0                              </p>             </div>         </div>`)[0];
+                popup_a2aa2a2c067e5fd82dc6707f5be52db5.setContent(html_75f6af5928061043f3f954b913de0671);
+            
+        
+
+        circle_marker_8ce882e15d87b7efbd63310f1c13c711.bindPopup(popup_a2aa2a2c067e5fd82dc6707f5be52db5)
+        ;
+
+        
+    
+    
+            circle_marker_8ce882e15d87b7efbd63310f1c13c711.bindTooltip(
+                `<div>
+                     Falls
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_975176d5110108e9783bae95c81f493d = L.circleMarker(
+                [29.8899181, -97.9445478],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#926c00", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 9.539392014169456, "stroke": true, "weight": 2}
+            ).addTo(feature_group_e321c52ff72811c027e6d81a2c252ba8);
+        
+    
+        var popup_7c5569660002ccc06ecc5a5baf21632d = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_03522c3384a40ee3bcc4c57ce18d5ee1 = $(`<div id="html_03522c3384a40ee3bcc4c57ce18d5ee1" style="width: 100.0%; height: 100.0%;">             <div style="font-family: Arial; min-width: 200px;">                 <h4 style="margin: 0;">Jackson</h4>                 <hr style="margin: 5px 0;">                 <p style="margin: 5px 0;">                     <b>Students:</b> 819<br>                     <b>Desirability Score:</b> 0.424<br>                              <b>Bed Capacity:</b> 423<br>                     <b>Parking Spaces:</b> 257<br>                     <b>Current Usage:</b> 0                              </p>             </div>         </div>`)[0];
+                popup_7c5569660002ccc06ecc5a5baf21632d.setContent(html_03522c3384a40ee3bcc4c57ce18d5ee1);
+            
+        
+
+        circle_marker_975176d5110108e9783bae95c81f493d.bindPopup(popup_7c5569660002ccc06ecc5a5baf21632d)
+        ;
+
+        
+    
+    
+            circle_marker_975176d5110108e9783bae95c81f493d.bindTooltip(
+                `<div>
+                     Jackson
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_d69cd7879cd065ed2f15e6a31e0550c3 = L.circleMarker(
+                [29.8870106, -97.9397323],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#7f7f00", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7.3181661333667165, "stroke": true, "weight": 2}
+            ).addTo(feature_group_e321c52ff72811c027e6d81a2c252ba8);
+        
+    
+        var popup_f6a7e0bf26fd2e7ab03d00eee9f01d6e = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_e877cda82ef04236c095b3784e3bc997 = $(`<div id="html_e877cda82ef04236c095b3784e3bc997" style="width: 100.0%; height: 100.0%;">             <div style="font-family: Arial; min-width: 200px;">                 <h4 style="margin: 0;">Lantana</h4>                 <hr style="margin: 5px 0;">                 <p style="margin: 5px 0;">                     <b>Students:</b> 482<br>                     <b>Desirability Score:</b> 0.499<br>                              <b>Bed Capacity:</b> 239<br>                     <b>Parking Spaces:</b> 132<br>                     <b>Current Usage:</b> 0                              </p>             </div>         </div>`)[0];
+                popup_f6a7e0bf26fd2e7ab03d00eee9f01d6e.setContent(html_e877cda82ef04236c095b3784e3bc997);
+            
+        
+
+        circle_marker_d69cd7879cd065ed2f15e6a31e0550c3.bindPopup(popup_f6a7e0bf26fd2e7ab03d00eee9f01d6e)
+        ;
+
+        
+    
+    
+            circle_marker_d69cd7879cd065ed2f15e6a31e0550c3.bindTooltip(
+                `<div>
+                     Lantana
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_bf13e139c0a01dba05d6b624498b3e87 = L.circleMarker(
+                [29.8876145, -97.9406014],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#8d7100", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5.567764362830022, "stroke": true, "weight": 2}
+            ).addTo(feature_group_e321c52ff72811c027e6d81a2c252ba8);
+        
+    
+        var popup_c104fb95d0449316b04406963cbeb5fd = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_024e65eda085cf09e9b15197daedc5e4 = $(`<div id="html_024e65eda085cf09e9b15197daedc5e4" style="width: 100.0%; height: 100.0%;">             <div style="font-family: Arial; min-width: 200px;">                 <h4 style="margin: 0;">Laurel</h4>                 <hr style="margin: 5px 0;">                 <p style="margin: 5px 0;">                     <b>Students:</b> 279<br>                     <b>Desirability Score:</b> 0.447<br>                          </p>             </div>         </div>`)[0];
+                popup_c104fb95d0449316b04406963cbeb5fd.setContent(html_024e65eda085cf09e9b15197daedc5e4);
+            
+        
+
+        circle_marker_bf13e139c0a01dba05d6b624498b3e87.bindPopup(popup_c104fb95d0449316b04406963cbeb5fd)
+        ;
+
+        
+    
+    
+            circle_marker_bf13e139c0a01dba05d6b624498b3e87.bindTooltip(
+                `<div>
+                     Laurel
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_4c3d2dd6b43c20f42b0e06ac79711ad6 = L.circleMarker(
+                [29.8881956, -97.940644],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#9a6400", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4.307615994440028, "stroke": true, "weight": 2}
+            ).addTo(feature_group_e321c52ff72811c027e6d81a2c252ba8);
+        
+    
+        var popup_0585d76096beab31ca20e7e1404c0bdc = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_48805efb3021bd5118a501aeccf660d2 = $(`<div id="html_48805efb3021bd5118a501aeccf660d2" style="width: 100.0%; height: 100.0%;">             <div style="font-family: Arial; min-width: 200px;">                 <h4 style="margin: 0;">Mesquite</h4>                 <hr style="margin: 5px 0;">                 <p style="margin: 5px 0;">                     <b>Students:</b> 167<br>                     <b>Desirability Score:</b> 0.393<br>                          </p>             </div>         </div>`)[0];
+                popup_0585d76096beab31ca20e7e1404c0bdc.setContent(html_48805efb3021bd5118a501aeccf660d2);
+            
+        
+
+        circle_marker_4c3d2dd6b43c20f42b0e06ac79711ad6.bindPopup(popup_0585d76096beab31ca20e7e1404c0bdc)
+        ;
+
+        
+    
+    
+            circle_marker_4c3d2dd6b43c20f42b0e06ac79711ad6.bindTooltip(
+                `<div>
+                     Mesquite
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_923332babbebb1cef63f4e8ea678f2c0 = L.circleMarker(
+                [29.88783, -97.941214],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#8c7200", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5.3644923131436935, "stroke": true, "weight": 2}
+            ).addTo(feature_group_e321c52ff72811c027e6d81a2c252ba8);
+        
+    
+        var popup_43f7bca43b78acca513ba4eb59abd2f6 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_f1b2a023c53b6f23013f86bc5047ee7e = $(`<div id="html_f1b2a023c53b6f23013f86bc5047ee7e" style="width: 100.0%; height: 100.0%;">             <div style="font-family: Arial; min-width: 200px;">                 <h4 style="margin: 0;">Retama</h4>                 <hr style="margin: 5px 0;">                 <p style="margin: 5px 0;">                     <b>Students:</b> 259<br>                     <b>Desirability Score:</b> 0.448<br>                          </p>             </div>         </div>`)[0];
+                popup_43f7bca43b78acca513ba4eb59abd2f6.setContent(html_f1b2a023c53b6f23013f86bc5047ee7e);
+            
+        
+
+        circle_marker_923332babbebb1cef63f4e8ea678f2c0.bindPopup(popup_43f7bca43b78acca513ba4eb59abd2f6)
+        ;
+
+        
+    
+    
+            circle_marker_923332babbebb1cef63f4e8ea678f2c0.bindTooltip(
+                `<div>
+                     Retama
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_2e75e609ab7b2d9f2d0c3584ff0143dc = L.circleMarker(
+                [29.88692499999999, -97.944083],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#50ae00", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10.137937550497034, "stroke": true, "weight": 2}
+            ).addTo(feature_group_e321c52ff72811c027e6d81a2c252ba8);
+        
+    
+        var popup_6aefad545f56e935e6915940097d4c28 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_55e8c53b10b6616e0e9edd44a217989c = $(`<div id="html_55e8c53b10b6616e0e9edd44a217989c" style="width: 100.0%; height: 100.0%;">             <div style="font-family: Arial; min-width: 200px;">                 <h4 style="margin: 0;">San Jacinto</h4>                 <hr style="margin: 5px 0;">                 <p style="margin: 5px 0;">                     <b>Students:</b> 925<br>                     <b>Desirability Score:</b> 0.686<br>                              <b>Bed Capacity:</b> 469<br>                     <b>Parking Spaces:</b> 397<br>                     <b>Current Usage:</b> 0                              </p>             </div>         </div>`)[0];
+                popup_6aefad545f56e935e6915940097d4c28.setContent(html_55e8c53b10b6616e0e9edd44a217989c);
+            
+        
+
+        circle_marker_2e75e609ab7b2d9f2d0c3584ff0143dc.bindPopup(popup_6aefad545f56e935e6915940097d4c28)
+        ;
+
+        
+    
+    
+            circle_marker_2e75e609ab7b2d9f2d0c3584ff0143dc.bindTooltip(
+                `<div>
+                     San Jacinto
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_437d6ef4e46fab6d2a48194f3ae72aa0 = L.circleMarker(
+                [29.88692409999999, -97.9486761],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#7b8300", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 9.60324019392529, "stroke": true, "weight": 2}
+            ).addTo(feature_group_e321c52ff72811c027e6d81a2c252ba8);
+        
+    
+        var popup_999e06ddfcda7bc36b615a17180d2ede = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_ddff5e014e34f26cbc26efaa679453ce = $(`<div id="html_ddff5e014e34f26cbc26efaa679453ce" style="width: 100.0%; height: 100.0%;">             <div style="font-family: Arial; min-width: 200px;">                 <h4 style="margin: 0;">San Marcos</h4>                 <hr style="margin: 5px 0;">                 <p style="margin: 5px 0;">                     <b>Students:</b> 830<br>                     <b>Desirability Score:</b> 0.516<br>                              <b>Bed Capacity:</b> 417<br>                     <b>Parking Spaces:</b> 481<br>                     <b>Current Usage:</b> 0                              </p>             </div>         </div>`)[0];
+                popup_999e06ddfcda7bc36b615a17180d2ede.setContent(html_ddff5e014e34f26cbc26efaa679453ce);
+            
+        
+
+        circle_marker_437d6ef4e46fab6d2a48194f3ae72aa0.bindPopup(popup_999e06ddfcda7bc36b615a17180d2ede)
+        ;
+
+        
+    
+    
+            circle_marker_437d6ef4e46fab6d2a48194f3ae72aa0.bindTooltip(
+                `<div>
+                     San Marcos
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_2c439cfb21495e24d94b79e68f5e9c8c = L.circleMarker(
+                [29.8863734, -97.9509257],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#847a00", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8.082903768654761, "stroke": true, "weight": 2}
+            ).addTo(feature_group_e321c52ff72811c027e6d81a2c252ba8);
+        
+    
+        var popup_5e7072f84f2c06586ded321b32b00e4f = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_4f95a8150c860d0b7ccb553eec5649d9 = $(`<div id="html_4f95a8150c860d0b7ccb553eec5649d9" style="width: 100.0%; height: 100.0%;">             <div style="font-family: Arial; min-width: 200px;">                 <h4 style="margin: 0;">Sayers</h4>                 <hr style="margin: 5px 0;">                 <p style="margin: 5px 0;">                     <b>Students:</b> 588<br>                     <b>Desirability Score:</b> 0.480<br>                              <b>Bed Capacity:</b> 292<br>                     <b>Parking Spaces:</b> 102<br>                     <b>Current Usage:</b> 0                              </p>             </div>         </div>`)[0];
+                popup_5e7072f84f2c06586ded321b32b00e4f.setContent(html_4f95a8150c860d0b7ccb553eec5649d9);
+            
+        
+
+        circle_marker_2c439cfb21495e24d94b79e68f5e9c8c.bindPopup(popup_5e7072f84f2c06586ded321b32b00e4f)
+        ;
+
+        
+    
+    
+            circle_marker_2c439cfb21495e24d94b79e68f5e9c8c.bindTooltip(
+                `<div>
+                     Sayers
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_9f01e9a4f16d46fa91e09db0022685f5 = L.circleMarker(
+                [29.8863414, -97.9398855],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#679700", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 9.049247973665485, "stroke": true, "weight": 2}
+            ).addTo(feature_group_e321c52ff72811c027e6d81a2c252ba8);
+        
+    
+        var popup_db181f4cb057fc719c7fa1ca340872e8 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_e2c0b65efda01e9deab4dd59b6178416 = $(`<div id="html_e2c0b65efda01e9deab4dd59b6178416" style="width: 100.0%; height: 100.0%;">             <div style="font-family: Arial; min-width: 200px;">                 <h4 style="margin: 0;">Sterry Hall</h4>                 <hr style="margin: 5px 0;">                 <p style="margin: 5px 0;">                     <b>Students:</b> 737<br>                     <b>Desirability Score:</b> 0.594<br>                          </p>             </div>         </div>`)[0];
+                popup_db181f4cb057fc719c7fa1ca340872e8.setContent(html_e2c0b65efda01e9deab4dd59b6178416);
+            
+        
+
+        circle_marker_9f01e9a4f16d46fa91e09db0022685f5.bindPopup(popup_db181f4cb057fc719c7fa1ca340872e8)
+        ;
+
+        
+    
+    
+            circle_marker_9f01e9a4f16d46fa91e09db0022685f5.bindTooltip(
+                `<div>
+                     Sterry Hall
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_3785c96a940fb2c79ff0f8c853fd7810 = L.circleMarker(
+                [29.8869345, -97.9430557],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#718d00", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 9.568466729604882, "stroke": true, "weight": 2}
+            ).addTo(feature_group_e321c52ff72811c027e6d81a2c252ba8);
+        
+    
+        var popup_22737519be2d567f7ef04b68671c20d8 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_6725233c48d4bb11e17f79e1dd88f438 = $(`<div id="html_6725233c48d4bb11e17f79e1dd88f438" style="width: 100.0%; height: 100.0%;">             <div style="font-family: Arial; min-width: 200px;">                 <h4 style="margin: 0;">Tower</h4>                 <hr style="margin: 5px 0;">                 <p style="margin: 5px 0;">                     <b>Students:</b> 824<br>                     <b>Desirability Score:</b> 0.554<br>                              <b>Bed Capacity:</b> 434<br>                     <b>Parking Spaces:</b> 391<br>                     <b>Current Usage:</b> 0                              </p>             </div>         </div>`)[0];
+                popup_22737519be2d567f7ef04b68671c20d8.setContent(html_6725233c48d4bb11e17f79e1dd88f438);
+            
+        
+
+        circle_marker_3785c96a940fb2c79ff0f8c853fd7810.bindPopup(popup_22737519be2d567f7ef04b68671c20d8)
+        ;
+
+        
+    
+    
+            circle_marker_3785c96a940fb2c79ff0f8c853fd7810.bindTooltip(
+                `<div>
+                     Tower
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            feature_group_e321c52ff72811c027e6d81a2c252ba8.addTo(map_eebd92e59ceba085b307e8bc06af26db);
+        
+    
+            var feature_group_f49ffe7fe0b7e045e6a996b71f2f6d23 = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var circle_marker_8495ba15996e66d06506e7d572a36fcc = L.circleMarker(
+                [29.890614, 97.945516],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_f49ffe7fe0b7e045e6a996b71f2f6d23);
+        
+    
+        var popup_41d117c1feba8c1b8b2490801c61408f = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_c12dfaf433fca0d84d3415bf686db28c = $(`<div id="html_c12dfaf433fca0d84d3415bf686db28c" style="width: 100.0%; height: 100.0%;">                 <div style="font-family: Arial">                     <b>R56-SHC Thorpe</b><br>                     Spaces: 10                 </div>             </div>`)[0];
+                popup_41d117c1feba8c1b8b2490801c61408f.setContent(html_c12dfaf433fca0d84d3415bf686db28c);
+            
+        
+
+        circle_marker_8495ba15996e66d06506e7d572a36fcc.bindPopup(popup_41d117c1feba8c1b8b2490801c61408f)
+        ;
+
+        
+    
+    
+            circle_marker_8495ba15996e66d06506e7d572a36fcc.bindTooltip(
+                `<div>
+                     Parking: R56-SHC Thorpe
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_061b084a8353963614bb4e89228c3214 = L.circleMarker(
+                [29.886277, -97.948777],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_f49ffe7fe0b7e045e6a996b71f2f6d23);
+        
+    
+        var popup_74428c9c5e8ee2ee3095ff60b5e19ea1 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_1ae3a460ae6123797fa3e5ce5735dedf = $(`<div id="html_1ae3a460ae6123797fa3e5ce5735dedf" style="width: 100.0%; height: 100.0%;">                 <div style="font-family: Arial">                     <b>301-Llano Drive</b><br>                     Spaces: 95                 </div>             </div>`)[0];
+                popup_74428c9c5e8ee2ee3095ff60b5e19ea1.setContent(html_1ae3a460ae6123797fa3e5ce5735dedf);
+            
+        
+
+        circle_marker_061b084a8353963614bb4e89228c3214.bindPopup(popup_74428c9c5e8ee2ee3095ff60b5e19ea1)
+        ;
+
+        
+    
+    
+            circle_marker_061b084a8353963614bb4e89228c3214.bindTooltip(
+                `<div>
+                     Parking: 301-Llano Drive
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_9e5bd52ebaf095bf0e8998ec63c88153 = L.circleMarker(
+                [29.889331, -97.94639],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_f49ffe7fe0b7e045e6a996b71f2f6d23);
+        
+    
+        var popup_25697343412e0fd9d4100bcaf477eebf = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_a6776a89cecc5f0421e1286646874d56 = $(`<div id="html_a6776a89cecc5f0421e1286646874d56" style="width: 100.0%; height: 100.0%;">                 <div style="font-family: Arial">                     <b>202-College Inn</b><br>                     Spaces: 30                 </div>             </div>`)[0];
+                popup_25697343412e0fd9d4100bcaf477eebf.setContent(html_a6776a89cecc5f0421e1286646874d56);
+            
+        
+
+        circle_marker_9e5bd52ebaf095bf0e8998ec63c88153.bindPopup(popup_25697343412e0fd9d4100bcaf477eebf)
+        ;
+
+        
+    
+    
+            circle_marker_9e5bd52ebaf095bf0e8998ec63c88153.bindTooltip(
+                `<div>
+                     Parking: 202-College Inn
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_b31c41cb949d49a77cb42aa7db526150 = L.circleMarker(
+                [29.886604, -97.945323],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_f49ffe7fe0b7e045e6a996b71f2f6d23);
+        
+    
+        var popup_54a40e0dc52c1e273c62636ad74ee75c = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_7e3b53948978c8becf9504c135746232 = $(`<div id="html_7e3b53948978c8becf9504c135746232" style="width: 100.0%; height: 100.0%;">                 <div style="font-family: Arial">                     <b>115-Residential</b><br>                     Spaces: 85                 </div>             </div>`)[0];
+                popup_54a40e0dc52c1e273c62636ad74ee75c.setContent(html_7e3b53948978c8becf9504c135746232);
+            
+        
+
+        circle_marker_b31c41cb949d49a77cb42aa7db526150.bindPopup(popup_54a40e0dc52c1e273c62636ad74ee75c)
+        ;
+
+        
+    
+    
+            circle_marker_b31c41cb949d49a77cb42aa7db526150.bindTooltip(
+                `<div>
+                     Parking: 115-Residential
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_b7f9a056d06e28b7cbd8b6f6825dbc0a = L.circleMarker(
+                [29.885832, -97.939751],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_f49ffe7fe0b7e045e6a996b71f2f6d23);
+        
+    
+        var popup_2cc70c86c625ff1c52acbacc7e82f5b2 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_c94d6a1fd8cfd4e4de8630608660563f = $(`<div id="html_c94d6a1fd8cfd4e4de8630608660563f" style="width: 100.0%; height: 100.0%;">                 <div style="font-family: Arial">                     <b>Edward Gary St Garage</b><br>                     Spaces: 196                 </div>             </div>`)[0];
+                popup_2cc70c86c625ff1c52acbacc7e82f5b2.setContent(html_c94d6a1fd8cfd4e4de8630608660563f);
+            
+        
+
+        circle_marker_b7f9a056d06e28b7cbd8b6f6825dbc0a.bindPopup(popup_2cc70c86c625ff1c52acbacc7e82f5b2)
+        ;
+
+        
+    
+    
+            circle_marker_b7f9a056d06e28b7cbd8b6f6825dbc0a.bindTooltip(
+                `<div>
+                     Parking: Edward Gary St Garage
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_90fdf3c52e8db398fc894d98d7943dcb = L.circleMarker(
+                [29.887076, -97.944402],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_f49ffe7fe0b7e045e6a996b71f2f6d23);
+        
+    
+        var popup_195f042d17b1f37fbba717a3ee827317 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_ed4fc34f94851482b4a17820c0baa5a8 = $(`<div id="html_ed4fc34f94851482b4a17820c0baa5a8" style="width: 100.0%; height: 100.0%;">                 <div style="font-family: Arial">                     <b>112-San Jacinto Hall</b><br>                     Spaces: 60                 </div>             </div>`)[0];
+                popup_195f042d17b1f37fbba717a3ee827317.setContent(html_ed4fc34f94851482b4a17820c0baa5a8);
+            
+        
+
+        circle_marker_90fdf3c52e8db398fc894d98d7943dcb.bindPopup(popup_195f042d17b1f37fbba717a3ee827317)
+        ;
+
+        
+    
+    
+            circle_marker_90fdf3c52e8db398fc894d98d7943dcb.bindTooltip(
+                `<div>
+                     Parking: 112-San Jacinto Hall
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_9a31853a7a770ff7d49ab2192eadacf6 = L.circleMarker(
+                [29.886425, -97.942881],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_f49ffe7fe0b7e045e6a996b71f2f6d23);
+        
+    
+        var popup_3821146f5aba529142b0df2959822c8d = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_3eaa4b5b56f10b3c1d3d9041b08f0b4f = $(`<div id="html_3eaa4b5b56f10b3c1d3d9041b08f0b4f" style="width: 100.0%; height: 100.0%;">                 <div style="font-family: Arial">                     <b>105-Admissions</b><br>                     Spaces: 35                 </div>             </div>`)[0];
+                popup_3821146f5aba529142b0df2959822c8d.setContent(html_3eaa4b5b56f10b3c1d3d9041b08f0b4f);
+            
+        
+
+        circle_marker_9a31853a7a770ff7d49ab2192eadacf6.bindPopup(popup_3821146f5aba529142b0df2959822c8d)
+        ;
+
+        
+    
+    
+            circle_marker_9a31853a7a770ff7d49ab2192eadacf6.bindTooltip(
+                `<div>
+                     Parking: 105-Admissions
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_1fd97f9bd1b4f83d2e9e5f2775c7f3de = L.circleMarker(
+                [29.890612, -97.944559],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_f49ffe7fe0b7e045e6a996b71f2f6d23);
+        
+    
+        var popup_a4c27b68aa249b8d9300bfc6907e61ec = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_572228bb4a2bf498b2eb7cc3cbdc9a2b = $(`<div id="html_572228bb4a2bf498b2eb7cc3cbdc9a2b" style="width: 100.0%; height: 100.0%;">                 <div style="font-family: Arial">                     <b>204-Jackson</b><br>                     Spaces: 46                 </div>             </div>`)[0];
+                popup_a4c27b68aa249b8d9300bfc6907e61ec.setContent(html_572228bb4a2bf498b2eb7cc3cbdc9a2b);
+            
+        
+
+        circle_marker_1fd97f9bd1b4f83d2e9e5f2775c7f3de.bindPopup(popup_a4c27b68aa249b8d9300bfc6907e61ec)
+        ;
+
+        
+    
+    
+            circle_marker_1fd97f9bd1b4f83d2e9e5f2775c7f3de.bindTooltip(
+                `<div>
+                     Parking: 204-Jackson
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_f0354ecbc4965730d2eb7277b0a2d616 = L.circleMarker(
+                [29.885917, -97.947639],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_f49ffe7fe0b7e045e6a996b71f2f6d23);
+        
+    
+        var popup_df87ea14d217982b8dd6696da487994b = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_0b0fff550af2ed814710305a012830a4 = $(`<div id="html_0b0fff550af2ed814710305a012830a4" style="width: 100.0%; height: 100.0%;">                 <div style="font-family: Arial">                     <b>304-Academy Garage</b><br>                     Spaces: 462                 </div>             </div>`)[0];
+                popup_df87ea14d217982b8dd6696da487994b.setContent(html_0b0fff550af2ed814710305a012830a4);
+            
+        
+
+        circle_marker_f0354ecbc4965730d2eb7277b0a2d616.bindPopup(popup_df87ea14d217982b8dd6696da487994b)
+        ;
+
+        
+    
+    
+            circle_marker_f0354ecbc4965730d2eb7277b0a2d616.bindTooltip(
+                `<div>
+                     Parking: 304-Academy Garage
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_726ce86be3fd8f724c04be0202ab5a83 = L.circleMarker(
+                [29.887755, -97.953557],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_f49ffe7fe0b7e045e6a996b71f2f6d23);
+        
+    
+        var popup_e30db5075c0ee762fb366a6ec2d8d3cf = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_ed872e97ed50257acb88ca1a523b1991 = $(`<div id="html_ed872e97ed50257acb88ca1a523b1991" style="width: 100.0%; height: 100.0%;">                 <div style="font-family: Arial">                     <b>303-Blanco Garage</b><br>                     Spaces: 271                 </div>             </div>`)[0];
+                popup_e30db5075c0ee762fb366a6ec2d8d3cf.setContent(html_ed872e97ed50257acb88ca1a523b1991);
+            
+        
+
+        circle_marker_726ce86be3fd8f724c04be0202ab5a83.bindPopup(popup_e30db5075c0ee762fb366a6ec2d8d3cf)
+        ;
+
+        
+    
+    
+            circle_marker_726ce86be3fd8f724c04be0202ab5a83.bindTooltip(
+                `<div>
+                     Parking: 303-Blanco Garage
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_61580a106cb67c65bdf88190145e9451 = L.circleMarker(
+                [29.887299, -97.942917],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_f49ffe7fe0b7e045e6a996b71f2f6d23);
+        
+    
+        var popup_4b1c531abb4a934ebf0bf84a44f3e13d = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_95ac8ee3bc22c547415c85ab9a131f82 = $(`<div id="html_95ac8ee3bc22c547415c85ab9a131f82" style="width: 100.0%; height: 100.0%;">                 <div style="font-family: Arial">                     <b>106-Tower Garage</b><br>                     Spaces: 249                 </div>             </div>`)[0];
+                popup_4b1c531abb4a934ebf0bf84a44f3e13d.setContent(html_95ac8ee3bc22c547415c85ab9a131f82);
+            
+        
+
+        circle_marker_61580a106cb67c65bdf88190145e9451.bindPopup(popup_4b1c531abb4a934ebf0bf84a44f3e13d)
+        ;
+
+        
+    
+    
+            circle_marker_61580a106cb67c65bdf88190145e9451.bindTooltip(
+                `<div>
+                     Parking: 106-Tower Garage
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_b591d776c958839bd082e0a9f944d09b = L.circleMarker(
+                [29.890936, -97.953764],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_f49ffe7fe0b7e045e6a996b71f2f6d23);
+        
+    
+        var popup_55abc3aed3cb675bb7590f30be9b24c8 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_b90ed0821d8dddde8af58508d612fb02 = $(`<div id="html_b90ed0821d8dddde8af58508d612fb02" style="width: 100.0%; height: 100.0%;">                 <div style="font-family: Arial">                     <b>306-Speck Garage</b><br>                     Spaces: 342                 </div>             </div>`)[0];
+                popup_55abc3aed3cb675bb7590f30be9b24c8.setContent(html_b90ed0821d8dddde8af58508d612fb02);
+            
+        
+
+        circle_marker_b591d776c958839bd082e0a9f944d09b.bindPopup(popup_55abc3aed3cb675bb7590f30be9b24c8)
+        ;
+
+        
+    
+    
+            circle_marker_b591d776c958839bd082e0a9f944d09b.bindTooltip(
+                `<div>
+                     Parking: 306-Speck Garage
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_b754e8a8b228b6d8f9578b111e2bbbb2 = L.circleMarker(
+                [29.887076, -97.944402],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_f49ffe7fe0b7e045e6a996b71f2f6d23);
+        
+    
+        var popup_4196d62d60fe2b9fb60b1f87cba9eed8 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_cc699b30d6ca68d6aeb428da09010e70 = $(`<div id="html_cc699b30d6ca68d6aeb428da09010e70" style="width: 100.0%; height: 100.0%;">                 <div style="font-family: Arial">                     <b>108-Wood St Garage</b><br>                     Spaces: 275                 </div>             </div>`)[0];
+                popup_4196d62d60fe2b9fb60b1f87cba9eed8.setContent(html_cc699b30d6ca68d6aeb428da09010e70);
+            
+        
+
+        circle_marker_b754e8a8b228b6d8f9578b111e2bbbb2.bindPopup(popup_4196d62d60fe2b9fb60b1f87cba9eed8)
+        ;
+
+        
+    
+    
+            circle_marker_b754e8a8b228b6d8f9578b111e2bbbb2.bindTooltip(
+                `<div>
+                     Parking: 108-Wood St Garage
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_570d2a71373f8566c76a37c7179c30b9 = L.circleMarker(
+                [29.889411, -97.946351],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_f49ffe7fe0b7e045e6a996b71f2f6d23);
+        
+    
+        var popup_9064069c1c39e7da9b3fdbb278996af8 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_2da1809c0449256d0dca08b59473514e = $(`<div id="html_2da1809c0449256d0dca08b59473514e" style="width: 100.0%; height: 100.0%;">                 <div style="font-family: Arial">                     <b>307-ASGH</b><br>                     Spaces: 12                 </div>             </div>`)[0];
+                popup_9064069c1c39e7da9b3fdbb278996af8.setContent(html_2da1809c0449256d0dca08b59473514e);
+            
+        
+
+        circle_marker_570d2a71373f8566c76a37c7179c30b9.bindPopup(popup_9064069c1c39e7da9b3fdbb278996af8)
+        ;
+
+        
+    
+    
+            circle_marker_570d2a71373f8566c76a37c7179c30b9.bindTooltip(
+                `<div>
+                     Parking: 307-ASGH
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_36bc9ca326eb1911ede520fec332dc75 = L.circleMarker(
+                [29.886925, -97.944383],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_f49ffe7fe0b7e045e6a996b71f2f6d23);
+        
+    
+        var popup_1c2e0358615b8f830266cd0b29df2259 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_45546f6fef06cc5b0cc195f51c987d73 = $(`<div id="html_45546f6fef06cc5b0cc195f51c987d73" style="width: 100.0%; height: 100.0%;">                 <div style="font-family: Arial">                     <b>112-San Jacinto Garage</b><br>                     Spaces: 227                 </div>             </div>`)[0];
+                popup_1c2e0358615b8f830266cd0b29df2259.setContent(html_45546f6fef06cc5b0cc195f51c987d73);
+            
+        
+
+        circle_marker_36bc9ca326eb1911ede520fec332dc75.bindPopup(popup_1c2e0358615b8f830266cd0b29df2259)
+        ;
+
+        
+    
+    
+            circle_marker_36bc9ca326eb1911ede520fec332dc75.bindTooltip(
+                `<div>
+                     Parking: 112-San Jacinto Garage
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_56a5020386035ac9fd44171063754351 = L.circleMarker(
+                [29.890875, -97.94356],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_f49ffe7fe0b7e045e6a996b71f2f6d23);
+        
+    
+        var popup_0f52435d33d3754877a51dc7d21556ed = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_9634789b67e8f26b58043ea606411dca = $(`<div id="html_9634789b67e8f26b58043ea606411dca" style="width: 100.0%; height: 100.0%;">                 <div style="font-family: Arial">                     <b>113-Matthews Street Garage</b><br>                     Spaces: 628                 </div>             </div>`)[0];
+                popup_0f52435d33d3754877a51dc7d21556ed.setContent(html_9634789b67e8f26b58043ea606411dca);
+            
+        
+
+        circle_marker_56a5020386035ac9fd44171063754351.bindPopup(popup_0f52435d33d3754877a51dc7d21556ed)
+        ;
+
+        
+    
+    
+            circle_marker_56a5020386035ac9fd44171063754351.bindTooltip(
+                `<div>
+                     Parking: 113-Matthews Street Garage
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_f99ae846303c16937ad3d4a224413da2 = L.circleMarker(
+                [-97.943473322056, 29.8903241807562],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_f49ffe7fe0b7e045e6a996b71f2f6d23);
+        
+    
+        var popup_b5bdaa18ff2865b1e5314feda80b9f5d = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_ab59f2d7ce36b53b6b4de51ca583b30a = $(`<div id="html_ab59f2d7ce36b53b6b4de51ca583b30a" style="width: 100.0%; height: 100.0%;">                 <div style="font-family: Arial">                     <b>204-Jackson Rear</b><br>                     Spaces: 46                 </div>             </div>`)[0];
+                popup_b5bdaa18ff2865b1e5314feda80b9f5d.setContent(html_ab59f2d7ce36b53b6b4de51ca583b30a);
+            
+        
+
+        circle_marker_f99ae846303c16937ad3d4a224413da2.bindPopup(popup_b5bdaa18ff2865b1e5314feda80b9f5d)
+        ;
+
+        
+    
+    
+            circle_marker_f99ae846303c16937ad3d4a224413da2.bindTooltip(
+                `<div>
+                     Parking: 204-Jackson Rear
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_001c15626ba43a71ed6e7900d7693bb8 = L.circleMarker(
+                [29.886483336151997, -97.95057498645716],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_f49ffe7fe0b7e045e6a996b71f2f6d23);
+        
+    
+        var popup_25020adcb5b0e0dc8091331259bcec7c = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_dbc40c9f323cba4a7c08372a59d5aaf6 = $(`<div id="html_dbc40c9f323cba4a7c08372a59d5aaf6" style="width: 100.0%; height: 100.0%;">                 <div style="font-family: Arial">                     <b>305-Moore Street</b><br>                     Spaces: 121                 </div>             </div>`)[0];
+                popup_25020adcb5b0e0dc8091331259bcec7c.setContent(html_dbc40c9f323cba4a7c08372a59d5aaf6);
+            
+        
+
+        circle_marker_001c15626ba43a71ed6e7900d7693bb8.bindPopup(popup_25020adcb5b0e0dc8091331259bcec7c)
+        ;
+
+        
+    
+    
+            circle_marker_001c15626ba43a71ed6e7900d7693bb8.bindTooltip(
+                `<div>
+                     Parking: 305-Moore Street
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_3225f88c737aa616baa91ab38427affa = L.circleMarker(
+                [29.88588095128971, -97.93967006308584],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_f49ffe7fe0b7e045e6a996b71f2f6d23);
+        
+    
+        var popup_3509a5dd3da00894e9bec16aa5a056a2 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_9212a679c026170f64bf424c33cccc98 = $(`<div id="html_9212a679c026170f64bf424c33cccc98" style="width: 100.0%; height: 100.0%;">                 <div style="font-family: Arial">                     <b>Edward Gary Streer Garage</b><br>                     Spaces: 285                 </div>             </div>`)[0];
+                popup_3509a5dd3da00894e9bec16aa5a056a2.setContent(html_9212a679c026170f64bf424c33cccc98);
+            
+        
+
+        circle_marker_3225f88c737aa616baa91ab38427affa.bindPopup(popup_3509a5dd3da00894e9bec16aa5a056a2)
+        ;
+
+        
+    
+    
+            circle_marker_3225f88c737aa616baa91ab38427affa.bindTooltip(
+                `<div>
+                     Parking: Edward Gary Streer Garage
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_a49459bbd8b74ca4d58d4bab80c862a4 = L.circleMarker(
+                [29.88973804916745, -97.943735796654],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_f49ffe7fe0b7e045e6a996b71f2f6d23);
+        
+    
+        var popup_8959b29be419f3a01cd9fb6cd57bae25 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_084a12c6528e31068fd7958d359d76df = $(`<div id="html_084a12c6528e31068fd7958d359d76df" style="width: 100.0%; height: 100.0%;">                 <div style="font-family: Arial">                     <b>Russell Street</b><br>                     Spaces: 7                 </div>             </div>`)[0];
+                popup_8959b29be419f3a01cd9fb6cd57bae25.setContent(html_084a12c6528e31068fd7958d359d76df);
+            
+        
+
+        circle_marker_a49459bbd8b74ca4d58d4bab80c862a4.bindPopup(popup_8959b29be419f3a01cd9fb6cd57bae25)
+        ;
+
+        
+    
+    
+            circle_marker_a49459bbd8b74ca4d58d4bab80c862a4.bindTooltip(
+                `<div>
+                     Parking: Russell Street
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_7348f6a88f9b1464f850828be4259a45 = L.circleMarker(
+                [29.89008130431256, -97.94327374995864],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.6, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(feature_group_f49ffe7fe0b7e045e6a996b71f2f6d23);
+        
+    
+        var popup_06e1e6a822fe33995379dc8766fea584 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_20629c2ea0b934847a683d72d3f4192e = $(`<div id="html_20629c2ea0b934847a683d72d3f4192e" style="width: 100.0%; height: 100.0%;">                 <div style="font-family: Arial">                     <b>Student Ctr Dr/Arnold</b><br>                     Spaces: 15                 </div>             </div>`)[0];
+                popup_06e1e6a822fe33995379dc8766fea584.setContent(html_20629c2ea0b934847a683d72d3f4192e);
+            
+        
+
+        circle_marker_7348f6a88f9b1464f850828be4259a45.bindPopup(popup_06e1e6a822fe33995379dc8766fea584)
+        ;
+
+        
+    
+    
+            circle_marker_7348f6a88f9b1464f850828be4259a45.bindTooltip(
+                `<div>
+                     Parking: Student Ctr Dr/Arnold
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            feature_group_f49ffe7fe0b7e045e6a996b71f2f6d23.addTo(map_eebd92e59ceba085b307e8bc06af26db);
+        
+    
+            var feature_group_f0e80480df071416b81b3e071ba4b7c5 = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var heat_map_7cc4f6839edc4a703dd99602c9b69d14 = L.heatLayer(
+                [[29.8907069, -97.9421424, 505.0], [29.888411, -97.938351, 430.0], [29.8863769, -97.9480979, 393.0], [29.8871351, -97.9519144, 1556.0], [29.8931366, -97.9222567, 1262.0], [29.8882987, -97.9399, 227.0], [29.8870394, -97.9389694, 476.0], [29.8904711, -97.946585, 609.0], [29.88933089999999, -97.9463904, 564.0], [29.888411, -97.938351, 555.0], [29.8863734, -97.9509257, 582.0], [29.8899181, -97.9445478, 819.0], [29.8870106, -97.9397323, 482.0], [29.8876145, -97.9406014, 279.0], [29.8881956, -97.940644, 167.0], [29.88783, -97.941214, 259.0], [29.88692499999999, -97.944083, 925.0], [29.88692409999999, -97.9486761, 830.0], [29.8863734, -97.9509257, 588.0], [29.8863414, -97.9398855, 737.0], [29.8869345, -97.9430557, 824.0]],
+                {
+  "minOpacity": 0.5,
+  "maxZoom": 18,
+  "radius": 25,
+  "blur": 15,
+}
+            );
+        
+    
+            heat_map_7cc4f6839edc4a703dd99602c9b69d14.addTo(feature_group_f0e80480df071416b81b3e071ba4b7c5);
+        
+    
+            feature_group_f0e80480df071416b81b3e071ba4b7c5.addTo(map_eebd92e59ceba085b307e8bc06af26db);
+        
+    
+            var layer_control_7b33002516441b689b4f014095e9e525_layers = {
+                base_layers : {
+                    "cartodbpositron" : tile_layer_efd446989b61f27050f5f5f2693cd07d,
+                },
+                overlays :  {
+                    "Dorms" : feature_group_e321c52ff72811c027e6d81a2c252ba8,
+                    "Parking Lots" : feature_group_f49ffe7fe0b7e045e6a996b71f2f6d23,
+                    "Student Density" : feature_group_f0e80480df071416b81b3e071ba4b7c5,
+                },
+            };
+            let layer_control_7b33002516441b689b4f014095e9e525 = L.control.layers(
+                layer_control_7b33002516441b689b4f014095e9e525_layers.base_layers,
+                layer_control_7b33002516441b689b4f014095e9e525_layers.overlays,
+                {
+  "position": "topright",
+  "collapsed": true,
+  "autoZIndex": true,
+}
+            ).addTo(map_eebd92e59ceba085b307e8bc06af26db);
+
+        
+</script>
+</html>
