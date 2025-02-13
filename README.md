@@ -1,367 +1,156 @@
-# txst_open_datathon_2025
+# Texas State University Parking Optimization System
 
-# Procedure
+## Research Questions
 
-Research Question: 
+1. Which campus site provides the optimal location for a new parking facility to maximize benefits for dorm residents and the general student body?
+2. How can we develop an algorithm to match incoming students with vehicles to the best dorm locations, considering factors like parking proximity, available spaces, and individual preferences?
 
-- **Which campus site provides the optimal location for a new parking facility to maximize benefits for dorm residents and the general student population?​
+## Data Sources
 
-​
+### Core Datasets
 
- How can we develop an algorithm to match incoming students with vehicles to the best dorm locations, considering factors like parking proximity, available spaces, and individual preferences?**
+1. **students.csv**
+   - Columns: Campus, Class, Department, Gender, Housing, Level, Semester, Year
+   - Contains enrollment data by college, major, and housing
+   - Year stored as float64, Semester as categorical (Fall, Spring, Summer)
 
-1. What data we have - 
-1. we looked at : 
+2. **dorm.csv**
+   - Columns: dorm_name, capacity, latitude, longitude, formatted_address, place_id
+   - Contains dorm information and geolocation data
 
-college, major, housing wise enrollement data- https://public.tableau.com/app/profile/texas.state.institutional.research.qa/viz/shared/35794TZPQ
+3. **green_lots.csv**
+   - Columns: Location, Latitude, Longitude, Spaces
+   - Contains parking lot information and capacity data
 
-cleaned it, did data wrangling, data manipulation, encoding to get cleaned data. 
-which has 
+### Data Collection Process
 
-> 
-> 
-> 
-> ```
-> Index(['Campus', 'Class', 'Department', 'Gender', 'Housing', 'Level',
->        'Semester', 'Year'],
->       dtype='object')
-> ```
-> 
-1. What we are doing: 
+- Used Firecrawl API to scrape parking statistics
+- Utilized Google Maps API for geocoding dorm locations
+- Manually corrected some coordinates for improved accuracy
+- Performed inner joins on name columns for data consolidation
 
-wrote a script to scrape parking data from Firecrawl API : parking statistics website to get parking spots capacities and green permits total number → we then use Google maps API to get geo coordiantes based on dorms names as they had a place id on google and also enterd and corrected some of the coordinates manually cause they werent accurate to make it more accurate. then did an inner join on “name” column to get the unified data.
+## Methodology
 
-also did the same for housing website. to get capacities → we took the same approach for housing dorms too.  scraped each dorm and their beds using the Firecrawl API and then consolidated it using the google maps API.  then joined on name again. 
+### 1. Data Preprocessing
 
-How we did it → We looked at data and are tring to find an optimim algorithm to  find the best place for an incoming student who owns a vehicle. 
+- Filter students.csv to latest 2 semesters (2024)
+- Calculate student density per dorm
+- Segment university into clusters based on student population distribution
 
-1. Random forest model. 
-- look at the data.
-- based on this data and what our goal is which is best spot we will train a ML model. 
-- before training the model we will consider what models are good to do this action
-- after doing reserach we split the data, train the model. 
-- present results. 
-- we will use LLM to justify distances and stuff. 
+### 2. Desirability Score Calculation
 
-We combine our 2 hypothesis statmetns and the results we got, we document it and then present in a poster.  
+The desirability score combines three main components:
 
-What were the results 
+1. **Dorm Proximity**
+   - Calculated using minimum distance to dorms
+   - Higher scores for closer locations
 
-Data: 
+2. **Resident Density**
+   - Measures student population within 100m radius
+   - Considers dorm capacity in calculations
 
-In parking.csv ->Index(['Location', 'Latitude', 'Longitude', 'Spaces'], dtype='object')
+3. **Existing Parking Supply**
+   - Acts as a penalty factor
+   - Higher penalty for areas with many nearby lots
+   - No penalty for dorms without nearby parking
 
-in dorms.csv -> Index(['dorm_name', 'capacity', 'latitude', 'longitude', 'formatted_address',
-'place_id'],
-dtype='object')
-
-A "desirability score" for each location, based on factors you think are important (proximity to dorms, etc.). You could try to predict or rank these scores using a Random Forest based on location features.
-
-The user wants to use a Random Forest model and has decided to use a "desirability score" as the target variable for finding the best parking spot location.  This is a shift from the initial geospatial analysis focus, and we need to accommodate it.
-
-1. Dorm Proximity
-- Calculates how close each candidate location is to existing dorms
-- Uses the minimum distance to any dorm as a metric
-- Higher scores for locations closer to dorms
-1. Resident Density
-- Measures how many students live within a given radius (0.001 degrees, roughly 100m)
-- Considers dorm capacity in the calculation
-- Higher scores for locations near more student residents
-1. Existing Parking Supply
-- Counts the number of existing parking spaces within the radius
-- Acts as a penalty factor to avoid oversaturation
-- Lower scores for locations with lots of nearby parking
-
-The scoring process works like this:
-
-1. Normalizes each component to a 0-1 scale for fair comparison
-2. Applies different weights to each factor:
-    - Proximity: weight of 1.0 (highest priority)
-    - Density: weight of 0.7 (medium priority)
-    - Parking: weight of 0.5 (lowest priority)
-3. Combines the weighted scores to get a final desirability score:
-    
-    ```
-    Copy
-    desirability = proximity_score + density_score - parking_penalty
-    
-    ```
-    
-
-The visualization uses Folium to create an interactive map with:
-
-- Blue markers for existing dorms
-- Green markers for existing parking lots
-- Color-coded circles for candidate locations (red to green based on desirability)
-- Popup information showing detailed scores and ratios
-
-The candidate locations are generated by taking existing dorm positions and adding small random offsets (about 100m in any direction) to create realistic potential spots to evaluate.
-
-```python
-# Calculate distances
-dorm_coords = dorms[['latitude', 'longitude']].values
-candidate_coords = candidates[['latitude', 'longitude']].values
-dorm_distances = cdist(candidate_coords, dorm_coords)
-min_dorm_distances = np.min(dorm_distances, axis=1)
-
+Formula:
+```
+desirability = (proximity_score * w1) + (density_score * w2) - (parking_penalty * w3)
 ```
 
-Here's what's happening step by step:
+Weights:
+- Proximity: 1.0 (highest priority)
+- Density: 0.7 (medium priority)
+- Parking: 0.5 (lowest priority)
 
-1. First, it extracts just the coordinate pairs:
-    - `dorm_coords` becomes a numpy array of [latitude, longitude] pairs for all dorms
-    - `candidate_coords` becomes a numpy array of [latitude, longitude] pairs for all candidate locations
-2. Then it uses `scipy.spatial.distance.cdist` to calculate distances:
-    - `cdist` computes the distance between each candidate location and each dorm
-    - It creates a matrix where:
-        - Each row represents a candidate location
-        - Each column represents a dorm
-        - Each cell contains the distance between that candidate-dorm pair
-3. Finally, it uses `np.min(dorm_distances, axis=1)` to:
-    - Take the minimum distance along axis 1 (the dorm axis)
-    - This gives us the distance to the nearest dorm for each candidate location
+### 3. Machine Learning Model
 
-The distances are then normalized to a 0-1 scale:
+Using Random Forest Regression to predict desirability scores:
 
+1. **Features**
+   - Candidate location coordinates (lat/long)
+   - Distance to nearest dorm
+   - Local resident density
+   - Nearby parking capacity
+
+2. **Training Process**
+   - Split data into training/testing sets
+   - Normalize features
+   - Train model to predict desirability scores
+   - Plot loss curves to monitor overfitting
+
+### 4. Visualization
+
+- Using OpenStreetMap for base map
+- Saving as HTML file for Google Colab compatibility
+- Map elements:
+  - Dorm locations (house icons)
+  - Existing parking (car icons)
+  - Top 3 recommended locations
+  - Interactive tooltips with location details
+
+## Current Implementation
+
+### Data Structure
 ```python
-python
-Copy
-min_dorm_distances_norm = (min_dorm_distances - min_dorm_distances.min()) / \
-                         (min_dorm_distances.max() - min_dorm_distances.min())
-
-```
-
-And converted to a proximity score with:
-
-```python
-python
-Copy
-proximity_score = w1 * (1 / (min_dorm_distances_norm + 0.001))
-
-```
-
-The `1 / (... + 0.001)` part inverts the distances so that:
-
-- Smaller distances become larger scores
-- The 0.001 prevents division by zero
-- The `w1` weight (1.0) determines how much this factor matters in the final score
-
----
-
-Let's break down the request and build a plan:
-
-1. **Define "Desirability Score":** Since it's user-defined, we need to operationalize it. For parking spot location, "desirability" likely relates to how well a location serves dorm residents and potentially other students by reducing parking scarcity. Key factors could be:
-    - Proximity to dorms (higher proximity = higher desirability for dorm residents).
-    - Density of dorm residents nearby (more residents = higher desirability).
-    - Lack of existing parking nearby (lower existing parking = higher desirability if demand is present).
-    - Accessibility (implicitly assumed, but worth noting - location should be reachable).
-    
-    We can combine these into a score.  Let's think of a formula.
-    
-2. **Create Candidate Locations:** We don't have pre-defined candidate locations yet. We need to generate some. Possibilities:
-    - **Discretize Campus:** Divide the campus into a grid or use existing geographic units (like blocks or areas). The *center* of each grid cell/area becomes a candidate location.
-    - **Dorm Centroids as Starting Points:** Use the locations of dorms as starting points, and maybe consider locations near them.
-    - **Existing Parking Locations (but shifted slightly):** Perhaps explore locations a bit away from existing parking to address unmet demand, not just add more to already parked areas.
-    
-    Let's go with **discretizing the campus** using grid cells. This provides a systematic way to explore locations. We'll need to define the grid size. Smaller grid = more granular, but more data points.
-    
-3. **Feature Engineering for Candidate Locations:** For each candidate location, we need to calculate features that contribute to its "desirability score." 
-    - **Proximity to Dorms:** Calculate the distance to the nearest dorm, or sum of distances to all dorms (inversely related to desirability). Better: Calculate distance to the *closest dorm cluster centroid*.
-    - **Dorm Resident Density Nearby:** Count the number of dorm residents living within a certain radius of the candidate location. Use `dorms.csv` capacity and location data, combined with `students.csv` housing info to estimate residents per dorm.
-    - **Existing Parking Supply Nearby:** Sum the parking `Spaces` from `parking.csv` within a certain radius of the candidate location. Inversely related to desirability (more existing parking = less *need*).
-    - **Latitude, Longitude of Candidate Location:** As location features themselves. Random Forest might pick up spatial patterns.
-4. **Calculate "Desirability Score" for Each Candidate Location:** Design a formula to combine the features into a single score. This is subjective, but let's start with a simple weighted combination. For example:
-    - Desirability = `w1 * (1 / Dorm_Proximity)` + `w2 * Dorm_Resident_Density` - `w3 * Existing_Parking_Supply`
-    
-    We might need to normalize features before combining.  Weights (`w1`, `w2`, `w3`) can be adjusted based on intuition or feature importance from a preliminary model.  Let's simplify initially and assume equal weights (or start without explicit weights and see feature importances).
-    
-5. **Dataset Schema:** The final dataset for Random Forest will look like this:
-    
-    | Feature                       | Description                                                                    | Source Data        |
-    |-------------------------------|------------------------------------------------------------------------
-    | Candidate_Location_Latitude    | Latitude of the candidate parking location                                      | Grid Generation   |
-    | Candidate_Location_Longitude   | Longitude of the candidate parking location                                     | Grid Generation   |
-    | Dorm_Proximity                | Distance to the nearest dorm (or dorm cluster centroid)                         | dorms.csv         |
-    | Dorm_Resident_Density         | Number of dorm residents within a radius of candidate location                  | dorms.csv, students.csv |
-    | Existing_Parking_Supply       | Total parking spaces within a radius of candidate location                        | parking.csv        |
-    | **Desirability_Score**        | Calculated score combining the above features (our target variable)             | Feature calculation|
-    | ... (Potentially other features) | E.g., proximity to academic buildings, student population density (if possible)| students.csv, other data if available |
-    
-6. **Task Type:** Since we're predicting a continuous "desirability score," this is a **regression** task.
-7. **Train-Test Split:** Split the generated dataset into training and testing sets (e.g., 80/20 split).
-8. **Train Random Forest Model:** Train a Random Forest Regression model on the training data, using the features to predict `Desirability_Score`.
-9. **Evaluate Model:** Evaluate the model on the test set using regression metrics (e.g., Mean Squared Error, R-squared).
-10. **Feature Importance Analysis:** Examine feature importances from the trained Random Forest to understand which factors are most influential on the "desirability score." This can help refine the score calculation and feature set.
-11. **Predict Desirability Scores for All Candidate Locations:** Use the trained model to predict desirability scores for *all* candidate locations in your grid.
-12. **Identify Best Locations:** Sort candidate locations by their predicted "desirability score" in descending order. The top locations are your recommendations for new parking spots.
-13. **Refinement and Iteration:**
-    - Adjust the "desirability score" formula based on feature importances and domain knowledge.
-    - Experiment with different radii for calculating dorm density and parking supply.
-    - Consider adding more features if available (e.g., proximity to student hubs, pedestrian access).
-    - Visualize the results on a map to check for spatial coherence and sense.
-
-This plan outlines how to create a dataset and train a Random Forest model using a "desirability score" as the target variable to find suitable parking locations.  It’s a more complex approach than just geospatial analysis, but it directly addresses the user's request to train a Random Forest.  Let's proceed by generating candidate locations and calculating features.
-
-Okay, let's create a dataset to train your Random Forest model with "desirability score" as the target variable. Here's a breakdown of how we can achieve that and the schema of the final dataset.
-
-**1. Define "Desirability Score"**
-
-Let's define what makes a parking spot location "desirable". For our purpose, a desirable location is:
-
-- **Close to dorms:** To serve dorm residents primarily.
-- **Surrounded by a high density of dorm residents:** To maximize benefit to more residents.
-- **Far from existing parking (relatively):** To address unmet needs and avoid over-saturating already well-served areas.
-
-We'll combine these factors into a numerical "desirability score". Higher score means more desirable.
-
-**2. Generate Candidate Parking Locations**
-
-We need to create a set of potential locations where we *could* build a parking spot.  A simple approach is to create a grid over the area where dorms are located.  For each grid point, we'll calculate our features and the desirability score.
-
-- **Determine the Bounding Box:** Find the minimum and maximum latitude and longitude from your `dorms.csv` file to define the area of interest. You might want to expand this slightly to include areas around the dorms.
-- **Create a Grid:** Divide this bounding box into a grid of points. The finer the grid (smaller grid cells), the more candidate locations you'll have. Let's say we decide on a grid spacing (e.g., 0.001 degrees in latitude and longitude).
-
-**3. Feature Engineering for Each Candidate Location**
-
-For each candidate location (grid point), we will calculate features that reflect our desirability criteria:
-
-- **Feature 1: `Dorm_Proximity` (Distance to Nearest Dorm):**
-    - For each candidate location, calculate the distance to every dorm location in `dorms.csv`.
-    - Take the *minimum* of these distances. A smaller distance to the nearest dorm is better (more desirable). We might use the *inverse* of this distance in our score so that higher values mean more desirable.
-    - *Data Source:* `dorms.csv` (latitude, longitude).
-- **Feature 2: `Dorm_Resident_Density` (Number of Dorm Residents Nearby):**
-    - Define a radius around the candidate location (e.g., 500 meters, you might need to experiment with this).
-    - For each dorm in `dorms.csv`, check if it falls within this radius of the candidate location.
-    - If it does, add the `capacity` of that dorm to a running total. This total is the `Dorm_Resident_Density`. Higher density is more desirable.
-    - *Data Source:* `dorms.csv` (latitude, longitude, capacity).
-- **Feature 3: `Existing_Parking_Supply_Nearby` (Parking Spaces Nearby):**
-    - Use the same radius as in Feature 2.
-    - For each parking location in `parking.csv`, check if it falls within this radius of the candidate location.
-    - If it does, add the `Spaces` at that parking location to a running total. This is `Existing_Parking_Supply_Nearby`. *Lower* supply nearby is more desirable, so we might use the *inverse* or negative of this in our score.
-    - *Data Source:* `parking.csv` (Latitude, Longitude, Spaces).
-- **Feature 4: `Candidate_Latitude`, `Candidate_Longitude`:**
-    - Simply the latitude and longitude of the candidate grid point. These can help the model learn spatial patterns.
-
-**4. Calculate "Desirability Score"**
-
-Now, combine the features into a "Desirability Score". A simple linear combination could work to start:
-
-`Desirability_Score =  (w1 * (1 / (Dorm_Proximity + small_constant))) +  (w2 * Dorm_Resident_Density) - (w3 * Existing_Parking_Supply_Nearby) + w4*Candidate_Latitude + w5*Candidate_Longitude`
-
-- **`w1`, `w2`, `w3`, `w4`, `w5`**: Weights to control the importance of each feature. You can start with equal weights (e.g., `w1=1, w2=1, w3=1, w4=0, w5=0`) and adjust later based on feature importance from your model or domain knowledge.
-- **`small_constant`**: Added to `Dorm_Proximity` in the denominator to avoid division by zero if a candidate location is very close to a dorm. Something like 0.0001.
-- **Normalization**: You might need to normalize or standardize features before combining them, especially if they are on very different scales. For example, you could use Min-Max scaling or Z-score standardization.
-
-**5. Final Dataset Schema (for `students_parking_desirability.csv`):**
-
-This CSV file will have one row per candidate parking location (grid point).
-
-| Column Name | Data Type | Description | Source/Calculation |
-| --- | --- | --- | --- |
-| `Candidate_Latitude` | Float | Latitude of the candidate parking location (grid point) | Grid Generation |
-| `Candidate_Longitude` | Float | Longitude of the candidate parking location (grid point) | Grid Generation |
-| `Dorm_Proximity` | Float | Distance to the nearest dorm (in degrees or meters, depending on distance calculation) | Calculated from `dorms.csv` |
-| `Dorm_Resident_Density` | Integer | Number of dorm residents within a defined radius | Calculated from `dorms.csv` |
-| `Existing_Parking_Supply_Nearby` | Integer | Total parking spaces within a defined radius | Calculated from `parking.csv` |
-| `Desirability_Score` | Float | Calculated desirability score for this location | Calculated using features |
-
-**Is this a Classification or Regression Task?**
-
-Since your target variable `Desirability_Score` is a continuous numerical value (calculated based on features), this is a **regression task**. You are trying to *predict* a score, not classify locations into categories.
-
-**Steps to Implement (Python using Libraries like Pandas, Geopandas, Scikit-learn):**
-
-1. **Load Data:** Load `dorms.csv`, `parking.csv`, and `students_encoded.csv` into Pandas DataFrames.
-2. **Define Grid:** Create a grid of latitude and longitude points over the dorm area. You can use `numpy.meshgrid` or similar functions.
-3. **Calculate Features:**
-    - For each grid point:
-        - Calculate `Dorm_Proximity` (using distance functions, e.g., from `geopy.distance` for geographic distances if needed, or simpler Euclidean distance if working with lat/long directly).
-        - Calculate `Dorm_Resident_Density`.
-        - Calculate `Existing_Parking_Supply_Nearby`.
-4. **Calculate `Desirability_Score`:** Implement the formula you defined, including any normalization and weight adjustments.
-5. **Create DataFrame:** Assemble the candidate locations and calculated features into a Pandas DataFrame according to the schema above. Save it to `students_parking_desirability.csv`.
-6. **Train-Test Split:** Split the DataFrame into training and testing sets using `sklearn.model_selection.train_test_split`.
-7. **Train Random Forest:** Train a `RandomForestRegressor` from `sklearn.ensemble` on your training data, using features as predictors and `Desirability_Score` as the target.
-8. **Evaluate Model:** Evaluate on the test set using regression metrics (MSE, R-squared, etc.).
-9. **Feature Importance:** Analyze `model.feature_importances_` to see which features are most influential.
-10. **Predict and Recommend:** Use the trained model to predict `Desirability_Score` for *all* candidate locations. Sort by predicted score to find the top locations.
-
-**Important Considerations:**
-
-- **Distance Metric:** Choose an appropriate distance metric for calculating proximity (e.g., Haversine distance for geographic coordinates if you want very accurate distances on Earth's surface, or Euclidean distance for simplicity if working in a projected coordinate system or for smaller areas).
-- **Radius for Density and Supply:** The radius you choose for calculating `Dorm_Resident_Density` and `Existing_Parking_Supply_Nearby` is crucial. Experiment with different radii to see how it affects results. Think about a reasonable walking distance around dorms (e.g., 500 meters, 1 km).
-- **Weight Tuning:** Experiment with different weights in your `Desirability_Score` formula. Feature importance from the Random Forest can guide you. You could also try techniques like grid search to optimize weights if you have a validation set.
-- **Data Scale:** Normalize or standardize your features before training the Random Forest, especially if they are on very different scales (e.g., distance might be very small numbers in degrees, while resident density and parking supply could be larger integers).
-- **Visualization:** Plot your candidate locations on a map, color-coded by their `Desirability_Score`. This will help you visually assess the results and see if they make sense spatially.
-
-Recommendation Logic (RGV KSM stuff)
-
-1. Data Analysis & Processing:
-- Analyzed shared parking lots between dorms
-- Calculated proper parking space allocation based on bed capacity ratios
-- Notable examples:
-    - Matthews Street Garage (628 spaces): Split between Jackson (257), Gallardia (192), CTQ (192)
-    - Edward Gary Street Garage (285 spaces): Split between Sterry (118), Lantana (76), Butler (91)
-    - San Jacinto Garage (227 spaces): Split between San Jacinto (121), San Marcos (106)
-1. MVP Implementation:
-- Created Python algorithm with core functionality:
-    - Tracks both bed and parking availability
-    - Handles student assignments based on preferences
-    - Maintains counters for used parking spaces
-    - Implements 95% capacity rule
-1. Key Data Structure:
-
-```python
-# Final consolidated format
-df = {
+{
     'dorm_name': str,          # Name of dorm
     'total_beds': int,         # Total bed capacity
     'total_parking': int,      # Total allocated parking spaces
     'used_parking': int,       # Counter for used parking spaces
     'occupied_beds': int       # Counter for occupied beds
 }
-
 ```
 
-1. Assignment Logic:
+### Parking Space Allocation Examples
+
+1. Matthews Street Garage (628 spaces)
+   - Jackson: 257 spaces
+   - Gallardia: 192 spaces
+   - CTQ: 192 spaces
+
+2. Edward Gary Street Garage (285 spaces)
+   - Sterry: 118 spaces
+   - Lantana: 76 spaces
+   - Butler: 91 spaces
+
+3. San Jacinto Garage (227 spaces)
+   - San Jacinto: 121 spaces
+   - San Marcos: 106 spaces
+
+### Assignment Logic
 
 ```python
 if student needs parking:
     check (bed availability < 95% AND parking available)
 else:
     check (bed availability < 95% only)
-
 ```
 
-Recommendation Logic (RGV KSM stuff)
+## Known Issues
 
-1. Data Analysis & Processing:
-- Analyzed shared parking lots between dorms
-- Calculated proper parking space allocation based on bed capacity ratios
-- Notable examples:
-    - Matthews Street Garage (628 spaces): Split between Jackson (257), Gallardia (192), CTQ (192)
-    - Edward Gary Street Garage (285 spaces): Split between Sterry (118), Lantana (76), Butler (91)
-    - San Jacinto Garage (227 spaces): Split between San Jacinto (121), San Marcos (106)
-1. MVP Implementation:
-- Created Python algorithm with core functionality:
-    - Tracks both bed and parking availability
-    - Handles student assignments based on preferences
-    - Maintains counters for used parking spaces
-    - Implements 95% capacity rule
-1. Key Data Structure:
+- Overfitting tendency with proximity features
+- Need for careful weight calibration in desirability score
+- Manual coordinate corrections required for some locations
 
-```python
-# Final consolidated format
-df = {
-    'dorm_name': str,          # Name of dorm
-    'total_beds': int,         # Total bed capacity
-    'total_parking': int,      # Total allocated parking spaces
-    'used_parking': int,       # Counter for used parking spaces
-    'occupied_beds': int       # Counter for occupied beds
-}
+## Future Improvements
 
-```
+1. Refined clustering algorithms for population density
+2. Enhanced penalty system for parking proximity
+3. Integration of additional student preference factors
+4. Dynamic weight adjustment based on seasonal patterns
 
+## Usage
 
+[Add usage instructions when implementation is complete]
 
+## Dependencies
 
+- Python 3.x
+- Pandas
+- NumPy
+- Scikit-learn
+- Folium (for visualization)
+- PapaParse (for CSV processing)
+- Lodash (for data manipulation)
