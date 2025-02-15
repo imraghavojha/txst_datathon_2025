@@ -59,14 +59,9 @@ Formula:
 desirability = (proximity_score * w1) + (density_score * w2) - (parking_penalty * w3)
 ```
 
-Weights:
-- Proximity: 1.0 (highest priority)
-- Density: 0.7 (medium priority)
-- Parking: 0.5 (lowest priority)
-
 ### 3. Machine Learning Model
 
-Using Random Forest Regression to predict desirability scores:
+Using KNN Clustering to predict desirability scores:
 
 1. **Features**
    - Candidate location coordinates (lat/long)
@@ -127,12 +122,6 @@ if student needs parking:
 else:
     check (bed availability < 95% only)
 ```
-
-## Known Issues
-
-- Overfitting tendency with proximity features
-- Need for careful weight calibration in desirability score
-- Manual coordinate corrections required for some locations
 
 ## Future Improvements
 
